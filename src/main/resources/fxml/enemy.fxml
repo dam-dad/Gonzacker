@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+          <children>
+              <HBox alignment="CENTER">
+               <children>
+                      <Label fx:id="hpLabel" alignment="CENTER" contentDisplay="TOP" text="Label" />
+               </children>
+              </HBox>
+              <ProgressBar fx:id="hpBar" prefWidth="200.0" progress="0.0" />
+              <ImageView fx:id="enemyImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../images/SlimeBlue.png" />
+                  </image>
+              </ImageView>
+          </children>
+      </VBox>
+   </center>
+</fx:root>
