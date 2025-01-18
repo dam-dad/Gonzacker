@@ -1,0 +1,27 @@
+
+.root {
+    -fx-font-family: 'Consolas';
+}
+
+.menu-principal {
+    -fx-background-color: #1b1e23;
+}
+
+.titulo {
+    -fx-font-size: 40;
+    -fx-text-fill: gray;
+}
+
+.button{
+    -fx-border-color:#35F900;
+    -fx-background-color: #00A21B;
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-border-width: 4;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.button:hover{
+    -fx-background-color:#35F900;
+}
