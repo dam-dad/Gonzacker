@@ -1,10 +1,12 @@
 
 .root {
     -fx-font-family: 'Consolas';
+    -fx-background-color: #1b1e23;
 }
 
-.menu-principal {
-    -fx-background-color: #1b1e23;
+.label{
+    -fx-font-size: 24;
+    -fx-text-fill: white;
 }
 
 .titulo {
