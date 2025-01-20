@@ -23,9 +23,9 @@ public class Entity extends BorderPane implements Initializable {
 
     // model
 
-    DoubleProperty vidaActual = new SimpleDoubleProperty();
-    DoubleProperty vidaMaxima = new SimpleDoubleProperty();
-    ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
+    private DoubleProperty vidaActual = new SimpleDoubleProperty();
+    private DoubleProperty vidaMaxima = new SimpleDoubleProperty();
+    private ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
 
     // view
 
