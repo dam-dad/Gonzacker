@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
@@ -19,7 +18,7 @@
                </children>
               </HBox>
               <ProgressBar fx:id="hpBar" prefWidth="200.0" progress="0.0" />
-              <ImageView fx:id="enemyImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+              <ImageView fx:id="entityImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                       <Image url="@../images/SlimeBlue.png" />
                   </image>

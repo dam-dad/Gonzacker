@@ -19,18 +19,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Enemy extends BorderPane implements Initializable {
+public class Entity extends BorderPane implements Initializable {
 
     // model
 
     DoubleProperty vidaActual = new SimpleDoubleProperty();
     DoubleProperty vidaMaxima = new SimpleDoubleProperty();
-    ObjectProperty<Image> imagenEnemigo = new SimpleObjectProperty<>();
+    ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
 
     // view
 
     @FXML
-    private ImageView enemyImage;
+    private ImageView entityImage;
 
     @FXML
     private ProgressBar hpBar;
@@ -38,10 +38,10 @@ public class Enemy extends BorderPane implements Initializable {
     @FXML
     private Label hpLabel;
 
-    public Enemy(){
+    public Entity(){
         super();
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/enemigo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/entity.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
@@ -61,7 +61,7 @@ public class Enemy extends BorderPane implements Initializable {
             return ((vidaActual.get())/vidaMaxima.get());
         }, vidaActual , vidaMaxima));
 
-        enemyImage.imageProperty().bind(imagenEnemigo);
+        entityImage.imageProperty().bind(imagenEntidad);
 
     }
 
@@ -93,15 +93,15 @@ public class Enemy extends BorderPane implements Initializable {
     }
 
     public Image getImagenEnemigo() {
-        return imagenEnemigo.get();
+        return imagenEntidad.get();
     }
 
     public ObjectProperty<Image> imagenEnemigoProperty() {
-        return imagenEnemigo;
+        return imagenEntidad;
     }
 
     public void setImagenEnemigo(Image imagenEnemigo) {
-        this.imagenEnemigo.set(imagenEnemigo);
+        this.imagenEntidad.set(imagenEnemigo);
     }
 
 }
