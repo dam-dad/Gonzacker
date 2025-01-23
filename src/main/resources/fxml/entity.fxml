@@ -5,19 +5,25 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="-Infinity" styleClass="entity" stylesheets="@../css/gonzacker.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
           <children>
-              <HBox alignment="CENTER">
+            <StackPane>
                <children>
-                      <Label fx:id="hpLabel" alignment="CENTER" contentDisplay="TOP" text="Label" />
+                  <ProgressBar fx:id="shieldBar" prefWidth="200.0" progress="0.0" styleClass="progress-bar-defensa" />
+                  <Label fx:id="shieldLabel" styleClass="entity-label" text="Label" />
                </children>
-              </HBox>
-              <ProgressBar fx:id="hpBar" prefWidth="200.0" progress="0.0" />
+            </StackPane>
+            <StackPane>
+               <children>
+                    <ProgressBar fx:id="hpBar" prefWidth="200.0" progress="0.0" styleClass="progress-bar-vida" />
+                  <Label fx:id="hpLabel" styleClass="entity-label" text="Label" />
+               </children>
+            </StackPane>
               <ImageView fx:id="entityImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                       <Image url="@../images/SlimeBlue.png" />

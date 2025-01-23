@@ -25,6 +25,7 @@ public class Entity extends BorderPane implements Initializable {
 
     private DoubleProperty vidaActual = new SimpleDoubleProperty();
     private DoubleProperty vidaMaxima = new SimpleDoubleProperty();
+    private DoubleProperty escudoActual = new SimpleDoubleProperty();
     private ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
 
     // view
@@ -37,6 +38,12 @@ public class Entity extends BorderPane implements Initializable {
 
     @FXML
     private Label hpLabel;
+
+    @FXML
+    private ProgressBar shieldBar;
+
+    @FXML
+    private Label shieldLabel;
 
     public Entity(){
         super();
@@ -57,9 +64,15 @@ public class Entity extends BorderPane implements Initializable {
 
         hpLabel.textProperty().bindBidirectional(vidaActual , new NumberStringConverter());
 
+        shieldLabel.textProperty().bindBidirectional(escudoActual , new NumberStringConverter());
+
         hpBar.progressProperty().bind(Bindings.createDoubleBinding(() -> {
             return ((vidaActual.get())/vidaMaxima.get());
         }, vidaActual , vidaMaxima));
+
+        shieldBar.progressProperty().bind(Bindings.createDoubleBinding(() -> {
+            return ((escudoActual.get())/vidaMaxima.get());
+        }, escudoActual , vidaMaxima));
 
         entityImage.imageProperty().bind(imagenEntidad);
 
@@ -67,6 +80,18 @@ public class Entity extends BorderPane implements Initializable {
 
     // getters and setters
 
+
+    public double getEscudoActual() {
+        return escudoActual.get();
+    }
+
+    public DoubleProperty escudoActualProperty() {
+        return escudoActual;
+    }
+
+    public void setEscudoActual(double escudoActual) {
+        this.escudoActual.set(escudoActual);
+    }
 
     public Double getVidaActual() {
         return vidaActual.get();

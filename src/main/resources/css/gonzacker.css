@@ -4,14 +4,28 @@
     -fx-background-color: #1b1e23;
 }
 
+.entity{
+    -fx-background-color: transparent;
+}
+
 .label{
     -fx-font-size: 24;
     -fx-text-fill: white;
 }
 
+.entity-label{
+    -fx-font-size: 12;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
 .titulo {
     -fx-font-size: 40;
     -fx-text-fill: gray;
+}
+
+.toolbar {
+    -fx-background-color: #1b1e23;
 }
 
 .button{
@@ -26,4 +40,12 @@
 
 .button:hover{
     -fx-background-color:#35F900;
+}
+
+.progress-bar-vida{
+    -fx-accent: red;
+}
+
+.progress-bar-defensa{
+    -fx-accent: rgb(109, 189, 232);
 }

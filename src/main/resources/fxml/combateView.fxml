@@ -5,20 +5,23 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <BorderPane BorderPane.alignment="CENTER">
          <bottom>
-            <HBox prefHeight="300.0" BorderPane.alignment="CENTER" />
+            <HBox prefHeight="250.0" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
             <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Mana" />
-                  <Button mnemonicParsing="false" text="Terminar turno" />
+                  <Label fx:id="energyLabel" text="Label" />
+                  <Button mnemonicParsing="false" onAction="#onFinishTurnAction" text="Terminar turno" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -34,7 +37,26 @@
                <graphic>
                   <FontIcon iconLiteral="mdmz-settings" iconSize="20" />
                </graphic></Button>
+            <Label fx:id="turnLabel" text="Label" />
         </items>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </ToolBar>
    </top>
+   <right>
+      <GridPane fx:id="enemyGridPane" hgap="10.0" prefWidth="500.0" vgap="10.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </right>
 </BorderPane>
