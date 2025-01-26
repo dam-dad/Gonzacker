@@ -38,6 +38,16 @@
     -fx-background-radius: 15;
 }
 
+.button-map{
+        -fx-border-color:#35F900;
+        -fx-background-color: #00A21B;
+        -fx-text-fill: white;
+        -fx-font-size: 15;
+        -fx-border-width: 2;
+        -fx-border-radius: 15;
+        -fx-background-radius: 15;
+}
+
 .button:hover{
     -fx-background-color:#35F900;
 }

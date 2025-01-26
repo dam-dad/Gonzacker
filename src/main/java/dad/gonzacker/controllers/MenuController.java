@@ -47,10 +47,14 @@ public class MenuController implements Initializable {
 
     @FXML
     void onStartAction(ActionEvent event) {
+        GonzackerApp.getMapController().limpiarLineas();
 
+        GonzackerApp.setRoot(GonzackerApp.getMapController().getRoot());
+        GonzackerApp.getMapController().setPreviousController(root);
+        Platform.runLater(() -> {
+            GonzackerApp.getMapController().redibujar();
+        });
     }
-
-
 
     // getters and setters
 

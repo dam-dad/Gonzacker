@@ -1,5 +1,6 @@
 package dad.gonzacker;
 
+import dad.gonzacker.controllers.MapController;
 import dad.gonzacker.controllers.MenuController;
 import dad.gonzacker.controllers.SettingsController;
 import javafx.application.Application;
@@ -12,8 +13,8 @@ public class GonzackerApp extends Application {
     // controllers
 
     private static MenuController menuController = new MenuController();
-    private static SettingsController settingsController= new SettingsController();
-
+    private static SettingsController settingsController = new SettingsController();
+    private static MapController mapController = new MapController();
 
     private static Scene scene = new Scene(menuController.getRoot());
 
@@ -26,6 +27,7 @@ public class GonzackerApp extends Application {
 
     }
 
+    // getters and setters
 
     public static void setRoot(Parent root){
         scene.setRoot(root);
@@ -45,5 +47,13 @@ public class GonzackerApp extends Application {
 
     public static void setSettingsController(SettingsController settingsController) {
         GonzackerApp.settingsController = settingsController;
+    }
+
+    public static MapController getMapController() {
+        return mapController;
+    }
+
+    public static void setMapController(MapController mapController) {
+        GonzackerApp.mapController = mapController;
     }
 }
