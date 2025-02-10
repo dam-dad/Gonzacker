@@ -64,3 +64,12 @@
     -fx-border-color: #323335b9;
     -fx-border-width: 6;
 }
+
+.shop-gridpane{
+    -fx-border-color: #323335b9;
+    -fx-border-width: 6;
+}
+
+.money-label{
+    -fx-text-fill: yellow;
+}
