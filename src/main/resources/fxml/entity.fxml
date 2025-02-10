@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root minHeight="-Infinity" styleClass="entity" stylesheets="@../css/gonzacker.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="-Infinity" styleClass="entity" stylesheets="@../css/gonzacker.css" type="BorderPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
           <children>
@@ -24,11 +24,15 @@
                   <Label fx:id="hpLabel" styleClass="entity-label" text="Label" />
                </children>
             </StackPane>
-              <ImageView fx:id="entityImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                      <Image url="@../images/SlimeBlue.png" />
-                  </image>
-              </ImageView>
+            <BorderPane style="-fx-background-color: transparent;">
+               <center>
+                    <ImageView fx:id="entityImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../images/Programer.png" />
+                        </image>
+                    </ImageView>
+               </center>
+            </BorderPane>
           </children>
       </VBox>
    </center>

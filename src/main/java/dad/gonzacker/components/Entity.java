@@ -21,14 +21,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Entity extends BorderPane implements Initializable {
+abstract class Entity extends BorderPane implements Initializable {
 
     // model
 
-    private DoubleProperty vidaActual = new SimpleDoubleProperty();
-    private DoubleProperty vidaMaxima = new SimpleDoubleProperty();
-    private DoubleProperty escudoActual = new SimpleDoubleProperty();
-    private ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
+    protected DoubleProperty vidaActual = new SimpleDoubleProperty();
+    protected DoubleProperty vidaMaxima = new SimpleDoubleProperty();
+    protected DoubleProperty escudoActual = new SimpleDoubleProperty();
+    protected ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
 
     // view
 
@@ -86,48 +86,14 @@ public class Entity extends BorderPane implements Initializable {
             event.consume();
         });
 
-        setOnDragDropped(event -> {
-            Dragboard dragboard = event.getDragboard();
+        extraInitialize();
+    }
 
-            if (dragboard.hasString()) {
-                String data = dragboard.getString();
-                String[] efectos = data.split(",");
-
-                for (String efecto : efectos) {
-                    if (efecto.startsWith("ataque:")) {
-                        String[] parts = efecto.split(":");
-                        int daño = Integer.parseInt(parts[1]);
-                        System.out.println("Carta de ataque soltada con daño: " + daño);
-                        reducirVida(daño);
-                    }
-
-                    //                else if (efecto.startsWith("curacion:")) {
-                    //                    String[] parts = efecto.split(":");
-                    //                    int curacion = Integer.parseInt(parts[1]);
-                    //                    System.out.println("Carta de curación soltada con curación: " + curacion);
-                    //                    aumentarVida(curacion);
-                    //                }
-                    //
-                    //                else if (efecto.startsWith("escudo:")) {
-                    //                    String[] parts = efecto.split(":");
-                    //                    int escudo = Integer.parseInt(parts[1]);
-                    //                    System.out.println("Carta de escudo soltada con valor: " + escudo);
-                    //                    aumentarEscudo(escudo);
-                    //                }
-
-                    else {
-                        System.out.println("Efecto desconocido: " + data);
-                    }
-                }
-            }
-
-            event.setDropCompleted(true);
-            event.consume();
-        });
+    protected void extraInitialize() {
+        // Futuros efectos
     }
 
     // getters and setters
-
 
     public double getEscudoActual() {
         return escudoActual.get();
@@ -177,34 +143,4 @@ public class Entity extends BorderPane implements Initializable {
         this.imagenEntidad.set(imagenEnemigo);
     }
 
-
-
-    // Método para reducir la vida de la entidad
-    private void reducirVida(double cantidad) {
-
-        double nuevoEscudo = escudoActual.get();
-        if (nuevoEscudo > 0){
-            double cantidadTemporal = cantidad-nuevoEscudo;
-
-            if (cantidadTemporal < 0){
-                cantidadTemporal = 0;
-            }
-
-            nuevoEscudo -= cantidad;
-            cantidad = cantidadTemporal;
-
-            if (nuevoEscudo < 0) {
-                nuevoEscudo = 0;
-            }
-
-            escudoActual.set(nuevoEscudo);
-        }
-
-        if (cantidad > 0) {
-            double nuevaVida = vidaActual.get() - cantidad;
-            if (nuevaVida < 0) nuevaVida = 0;
-            vidaActual.set(nuevaVida);
-            System.out.println("Vida de la entidad: " + nuevaVida);
-        }
-    }
 }

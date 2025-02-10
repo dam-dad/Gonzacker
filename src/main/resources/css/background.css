@@ -1,0 +1,12 @@
+.marco {
+     -fx-background-image: url('../images/BaseCartaLuxord.png');
+     -fx-background-size: contain;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: center;
+  }
+
+.imagenCarta {
+     -fx-background-image: url('../images/Prueba_Imagen.jpg');
+     -fx-background-size: contain;
+     -fx-background-repeat: no-repeat;
+  }

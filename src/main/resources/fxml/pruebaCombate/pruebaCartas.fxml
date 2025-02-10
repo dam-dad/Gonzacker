@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import dad.gonzacker.components.Entity?>
+<?import dad.gonzacker.components.UserEntity?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -50,7 +51,7 @@
       </ToolBar>
    </top>
    <right>
-      <GridPane fx:id="enemyGridPane" hgap="10.0" prefWidth="500.0" vgap="10.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="enemyGridPane" hgap="10.0" prefWidth="500.0" style="-fx-background-color: red;" vgap="10.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -62,13 +63,19 @@
          <BorderPane.margin>
             <Insets bottom="25.0" top="25.0" />
          </BorderPane.margin>
-         <children>
-            <Entity escudoActual="20.0" vidaActual="50.0" vidaMaxima="50.0">
-               <imagenEnemigo>
-                  <Image url="@../../images/SlimeBlue.png" />
-               </imagenEnemigo>
-            </Entity>
-         </children>
       </GridPane>
    </right>
+   <left>
+      <AnchorPane onDragDropped="#onFieldDropped" prefHeight="315.0" prefWidth="346.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER">
+         <children>
+            <UserEntity fx:id="user" layoutX="73.0" layoutY="60.0">
+               <imagenEnemigo>
+                  <Image url="@../../images/Programer.png" />
+               </imagenEnemigo>
+            </UserEntity>
+         </children></AnchorPane>
+   </left>
+   <center>
+      <AnchorPane onDragDropped="#onFieldDropped" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

@@ -1,19 +1,19 @@
 package dad.gonzacker.models;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private List<Carta> cartas;
-    private List<Carta> mano;     // Cartas en la mano del jugador
-    private List<Carta> descarte; // Cartas descartadas
+    private ListProperty<Carta> cartas = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Carta> descarte = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Carta> mano = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    public Deck() {
-        this.cartas = new ArrayList<>();
-        this.mano = new ArrayList<>();
-        this.descarte = new ArrayList<>();
-    }
+    public Deck() {}
 
     public void agregarCarta(Carta carta) {
         cartas.add(carta);
