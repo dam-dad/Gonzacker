@@ -1,4 +1,3 @@
-
 .root {
     -fx-font-family: 'Consolas';
     -fx-background-color: #1b1e23;
@@ -29,8 +28,8 @@
 }
 
 .button{
-    -fx-border-color:#35F900;
-    -fx-background-color: #00A21B;
+    -fx-border-color:#0099FF;
+    -fx-background-color: #007BFF;
     -fx-text-fill: white;
     -fx-font-size: 20;
     -fx-border-width: 4;
@@ -39,17 +38,17 @@
 }
 
 .button-map{
-        -fx-border-color:#35F900;
-        -fx-background-color: #00A21B;
-        -fx-text-fill: white;
-        -fx-font-size: 15;
-        -fx-border-width: 2;
-        -fx-border-radius: 15;
-        -fx-background-radius: 15;
+    -fx-border-color:#0099FF;
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
 }
 
 .button:hover{
-    -fx-background-color:#35F900;
+    -fx-background-color:#0099FF;
 }
 
 .button:disabled{

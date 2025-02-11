@@ -162,7 +162,7 @@ public class MapController implements Initializable  {
         double endY = btn2.getLayoutY() + btn2.getHeight() / 2;
 
         Line line = new Line(startX, startY, endX, endY);
-        line.setStroke(Color.web("#00FF00"));
+        line.setStroke(Color.web("#0099FF"));
         line.setStrokeWidth(2);
 
         pane.getChildren().add(line);
