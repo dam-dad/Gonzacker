@@ -95,6 +95,7 @@ abstract class Entity extends BorderPane implements Initializable {
 
     // getters and setters
 
+
     public double getEscudoActual() {
         return escudoActual.get();
     }
@@ -143,4 +144,34 @@ abstract class Entity extends BorderPane implements Initializable {
         this.imagenEntidad.set(imagenEnemigo);
     }
 
+
+
+    // Método para reducir la vida de la entidad
+    private void reducirVida(double cantidad) {
+
+        double nuevoEscudo = escudoActual.get();
+        if (nuevoEscudo > 0){
+            double cantidadTemporal = cantidad-nuevoEscudo;
+
+            if (cantidadTemporal < 0){
+                cantidadTemporal = 0;
+            }
+
+            nuevoEscudo -= cantidad;
+            cantidad = cantidadTemporal;
+
+            if (nuevoEscudo < 0) {
+                nuevoEscudo = 0;
+            }
+
+            escudoActual.set(nuevoEscudo);
+        }
+
+        if (cantidad > 0) {
+            double nuevaVida = vidaActual.get() - cantidad;
+            if (nuevaVida < 0) nuevaVida = 0;
+            vidaActual.set(nuevaVida);
+            System.out.println("Vida de la entidad: " + nuevaVida);
+        }
+    }
 }

@@ -23,39 +23,9 @@ public class EnemyEntity extends Entity {
     }
 
 
-
-
     public void realizarAccionAleatoria() {
         patron.ejecutarPatron(this, usuario);
     }
-
-    private void patronEnemigo() {
-        Random random = new Random();
-        int numero = random.nextInt(6) + 1; // Genera un número entre 1 y 6
-
-        System.out.println("Número generado: " + numero);
-
-        switch (numero) {
-            case 1:
-            case 2:
-                System.out.println("El enemigo ataca.");
-                atacar(usuario, 2);
-                break;
-            case 3:
-            case 4:
-                System.out.println("El enemigo se cura.");
-                curarse(3);
-                break;
-            case 5:
-            case 6:
-                System.out.println("El enemigo se fortalece.");
-                fortalecer(2);
-                break;
-            default:
-                System.out.println("Número fuera de rango (esto no debería pasar).");
-        }
-    }
-
 
     @Override
     protected void extraInitialize() {
@@ -81,7 +51,7 @@ public class EnemyEntity extends Entity {
 
     // Efectos del jugador
 
-    // Método para reducir la vida de la entidad
+    // Metodo para reducir la vida de la entidad
     public void reducirVida(double cantidad) {
 
         double nuevoEscudo = escudoActual.get();
