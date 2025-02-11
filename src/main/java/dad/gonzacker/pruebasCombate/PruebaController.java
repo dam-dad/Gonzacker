@@ -18,6 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -48,6 +51,9 @@ public class PruebaController implements Initializable {
         // Cambios únicamente en combate
         user.escudoActualProperty().bind(userShield);
 
+        energyLabel.setText(user.getEnergia() + "");
+        maxEnergyLabel.setText(user.getEnergiaMaxima() + "");
+
         // Cargar imágenes
         Image imgAtaque = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Prueba_Imagen.jpg")));
         Image imageEnemigo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SlimeBlue.png")));
@@ -69,6 +75,9 @@ public class PruebaController implements Initializable {
         enemyGridPane.add(enemigo1, 0, 0);
         enemyGridPane.add(enemigo2, 1, 0);
 
+        configurarDragAndDrop(userField);
+        configurarDragAndDrop(battleField);
+
 
     }
 
@@ -83,6 +92,12 @@ public class PruebaController implements Initializable {
     }
 
     @FXML
+    private AnchorPane battleField;
+
+    @FXML
+    private AnchorPane userField;
+
+    @FXML
     private FlowPane cartasZoneFlowPane;
 
     @FXML
@@ -92,10 +107,63 @@ public class PruebaController implements Initializable {
     private Label energyLabel;
 
     @FXML
+    private Label maxEnergyLabel;
+
+    @FXML
     private BorderPane root;
 
     @FXML
     private Label turnLabel;
+
+    private void configurarDragAndDrop(AnchorPane campo) {
+        if (campo != null) {
+            // Aceptar que una carta sea arrastrada sobre este AnchorPane
+            campo.setOnDragOver(event -> {
+                if (event.getGestureSource() instanceof CartaPequeniaComponent) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            });
+        }
+    }
+
+    @FXML
+    void onFieldDropped(DragEvent event) {
+        Dragboard dragboard = event.getDragboard();
+        if (dragboard.hasString()) {
+            String data = dragboard.getString();
+
+            // Buscar la carta en la mano
+            Carta cartaArrastrada = null;
+            for (Carta carta : mano) {
+                if (carta.getNombre().equals(data)) { // Suponiendo que el Dragboard contiene el nombre de la carta
+                    cartaArrastrada = carta;
+                    break;
+                }
+            }
+            if (cartaArrastrada != null) {
+                System.out.println("Carta soltada en el campo: " + cartaArrastrada.getNombre());
+
+                // Buscar el componente visual correspondiente
+                CartaPequeniaComponent cartaComponent = null;
+                for (javafx.scene.Node node : cartasZoneFlowPane.getChildren()) {
+                    if (node instanceof CartaPequeniaComponent) {
+                        CartaPequeniaComponent temp = (CartaPequeniaComponent) node;
+                        if (temp.getCarta().equals(cartaArrastrada)) {
+                            cartaComponent = temp;
+                            break;
+                        }
+                    }
+                }
+
+                if (cartaComponent != null) {
+                    jugarCarta(cartaComponent);
+                }
+            }
+        }
+        event.setDropCompleted(true);
+        event.consume();
+    }
 
     @FXML
     void onFinishTurnAction(ActionEvent event) {
@@ -103,11 +171,6 @@ public class PruebaController implements Initializable {
             enemigo.realizarAccionAleatoria();
         }
         System.out.println("Turno enemigo finalizado.");
-    }
-
-    @FXML
-    void onFieldDropped(DragEvent event) {
-
     }
 
     @FXML
