@@ -1,24 +1,34 @@
 package dad.gonzacker.controllers;
 
 import dad.gonzacker.GonzackerApp;
+import dad.gonzacker.components.CartaPequeniaComponent;
+import dad.gonzacker.components.UserEntity;
+import dad.gonzacker.models.Carta;
+import dad.gonzacker.models.Deck;
+import dad.gonzacker.models.EfectoCarta;
+import dad.gonzacker.models.Tipos;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
+import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MapController implements Initializable  {
 
@@ -26,7 +36,14 @@ public class MapController implements Initializable  {
 
     private Parent previousController;
     private HashMap<Button, java.util.List<Button>> conexiones = new HashMap<>();
-    private Button botonActual;
+
+    private IntegerProperty dinero = new SimpleIntegerProperty();
+    private UserEntity jugador = new UserEntity();
+    private List<Entity> enemigos = new ArrayList<>();
+    private ObjectProperty<Deck> deck = new SimpleObjectProperty<>(new Deck());
+    private List<Carta> cartas = new ArrayList<>();
+
+    private Image imgAtaque = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Prueba_Imagen.jpg")));
 
     // view
 
@@ -38,6 +55,15 @@ public class MapController implements Initializable  {
 
     @FXML
     private Pane linePane;
+
+    @FXML
+    private Label shieldLabel;
+
+    @FXML
+    private Label healthLabel;
+
+    @FXML
+    private Label moneyLabel;
 
     public MapController() {
         try {
@@ -52,8 +78,23 @@ public class MapController implements Initializable  {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dibujarLineas(linePane, gridPane);
-        botonActual = (Button) gridPane.getChildren().get(1);
-        habilitarSiguientes(botonActual);
+        habilitarSiguientes((Button) gridPane.getChildren().get(1));
+
+        // cartas
+
+        cartas.add(new Carta(1, "Ataque", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
+        cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
+        cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 4 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(4))));
+        cartas.add(new Carta(4, "Ataque 4",Tipos.Enemy  ,"Inflige 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(5))));
+
+        // bindings
+
+        dinero.set(5);
+
+        shieldLabel.textProperty().bind(jugador.escudoActualProperty().asString());
+        healthLabel.textProperty().bind(jugador.vidaActualProperty().asString());
+        moneyLabel.textProperty().bind(dinero.asString());
+
     }
 
     private void dibujarLineas(Pane linePane, GridPane gridPane) {
@@ -128,7 +169,6 @@ public class MapController implements Initializable  {
 
         // Guardar conexiones en el mapa
         conexiones.computeIfAbsent(btn1, k -> new ArrayList<>()).add(btn2);
-        conexiones.computeIfAbsent(btn2, k -> new ArrayList<>()).add(btn1);
     }
 
     private void habilitarSiguientes(Button boton) {
@@ -136,7 +176,6 @@ public class MapController implements Initializable  {
         for (Button btn : conexiones.keySet()) {
             btn.setDisable(true);
         }
-        boton.setDisable(false); // Mantener el botón actual habilitado
 
         // Habilitar solo los botones conectados
         List<Button> siguientes = conexiones.get(boton);
@@ -147,14 +186,6 @@ public class MapController implements Initializable  {
         }
     }
 
-    private void configurarBotones() {
-        for (Button btn : conexiones.keySet()) {
-            btn.setOnAction(event -> {
-                botonActual = btn;
-                habilitarSiguientes(botonActual);
-            });
-        }
-    }
 
     @FXML
     void onExitAction(ActionEvent event) {
@@ -164,6 +195,36 @@ public class MapController implements Initializable  {
 
     @FXML
     void onBossNodeAction(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void onCombatAction(ActionEvent event) {
+        habilitarSiguientes((Button) event.getSource());
+    }
+
+    @FXML
+    void onEventAction(ActionEvent event) {
+        habilitarSiguientes((Button) event.getSource());
+    }
+
+    @FXML
+    void onRestAction(ActionEvent event) {
+        habilitarSiguientes((Button) event.getSource());
+    }
+
+    @FXML
+    void onShopAction(ActionEvent event) {
+        habilitarSiguientes((Button) event.getSource());
+
+        Random random = new Random();
+
+        GonzackerApp.getShopController().setCartas(cartas.get(random.nextInt(cartas.size())), cartas.get(random.nextInt(cartas.size())), cartas.get(random.nextInt(cartas.size())));
+        GonzackerApp.getShopController().setPrecios(random.nextInt(10), random.nextInt(10), random.nextInt(10));
+        GonzackerApp.getShopController().resetShop();
+        GonzackerApp.getShopController().setMoney(dinero.get());
+        GonzackerApp.setRoot(GonzackerApp.getShopController().getRoot());
 
     }
 
@@ -182,5 +243,29 @@ public class MapController implements Initializable  {
 
     public void setPreviousController(Parent previousController) {
         this.previousController = previousController;
+    }
+
+    public Deck getDeck() {
+        return deck.get();
+    }
+
+    public ObjectProperty<Deck> deckProperty() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck.set(deck);
+    }
+
+    public int getDinero() {
+        return dinero.get();
+    }
+
+    public IntegerProperty dineroProperty() {
+        return dinero;
+    }
+
+    public void setDinero(int dinero) {
+        this.dinero.set(dinero);
     }
 }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<StackPane fx:id="root" styleClass="root" stylesheets="@../css/gonzacker.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" styleClass="root" stylesheets="@../css/gonzacker.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="linePane" prefHeight="200.0" prefWidth="200.0" />
         <GridPane fx:id="gridPane" alignment="CENTER" prefHeight="600.0" prefWidth="800.0">
@@ -45,24 +47,81 @@
             <children>
             <Button mnemonicParsing="false" onAction="#onExitAction" styleClass="button-map" text="EXIT" />
                 <Button mnemonicParsing="false" styleClass="button-map" text="START" GridPane.rowIndex="6" />
-                <Button mnemonicParsing="false" onAction="#onNode1Action" styleClass="button-map" text="nodo1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Button mnemonicParsing="false" onAction="#onNode2Action" styleClass="button-map" text="nodo2" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                <Button mnemonicParsing="false" onAction="#onNode3Action" styleClass="button-map" text="nodo3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <Button mnemonicParsing="false" onAction="#onNode4Action" styleClass="button-map" text="nodo4" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                <Button mnemonicParsing="false" onAction="#onNode5Action" styleClass="button-map" text="nodo5" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                <Button mnemonicParsing="false" onAction="#onNode6Action" styleClass="button-map" text="nodo6" GridPane.columnIndex="3" GridPane.rowIndex="12" />
-                <Button mnemonicParsing="false" onAction="#onNode7Action" styleClass="button-map" text="nodo7" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <Button mnemonicParsing="false" onAction="#onNode8Action" styleClass="button-map" text="nodo8" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                <Button mnemonicParsing="false" onAction="#onNode9Action" styleClass="button-map" text="nodo9" GridPane.columnIndex="5" GridPane.rowIndex="10" />
-                <Button mnemonicParsing="false" onAction="#onNode10Action" styleClass="button-map" text="nodo10" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                <Button mnemonicParsing="false" onAction="#onNode11Action" styleClass="button-map" text="nodo11" GridPane.columnIndex="7" GridPane.rowIndex="6" />
-                <Button mnemonicParsing="false" onAction="#onNode12Action" styleClass="button-map" text="nodo12" GridPane.columnIndex="7" GridPane.rowIndex="11" />
-                <Button mnemonicParsing="false" onAction="#onNode13Action" styleClass="button-map" text="nodo13" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-                <Button mnemonicParsing="false" onAction="#onNode14Action" styleClass="button-map" text="nodo14" GridPane.columnIndex="9" GridPane.rowIndex="5" />
-                <Button mnemonicParsing="false" onAction="#onNode15Action" styleClass="button-map" text="nodo15" GridPane.columnIndex="9" GridPane.rowIndex="7" />
-                <Button mnemonicParsing="false" onAction="#onNode16Action" styleClass="button-map" text="nodo16" GridPane.columnIndex="9" GridPane.rowIndex="10" />
-                <Button mnemonicParsing="false" onAction="#onNode17Action" styleClass="button-map" text="nodo17" GridPane.columnIndex="11" GridPane.rowIndex="7" />
-                <Button mnemonicParsing="false" onAction="#onBossNodeAction" styleClass="button-map" text="BOSS" GridPane.columnIndex="13" GridPane.rowIndex="7" />
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onEventAction" styleClass="button-map" GridPane.columnIndex="3" GridPane.rowIndex="6">
+               <graphic>
+                  <FontIcon iconLiteral="far-question-circle" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onEventAction" styleClass="button-map" GridPane.columnIndex="3" GridPane.rowIndex="9">
+               <graphic>
+                  <FontIcon iconLiteral="far-question-circle" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="3" GridPane.rowIndex="12">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onShopAction" styleClass="button-map" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <graphic>
+                  <FontIcon iconLiteral="mdal-attach_money" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="5" GridPane.rowIndex="6">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="5" GridPane.rowIndex="10">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onCombatAction" styleClass="button-map" GridPane.columnIndex="7" GridPane.rowIndex="6">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onRestAction" styleClass="button-map" GridPane.columnIndex="7" GridPane.rowIndex="11">
+               <graphic>
+                  <FontIcon iconLiteral="fas-wrench" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onEventAction" styleClass="button-map" GridPane.columnIndex="8" GridPane.rowIndex="2">
+               <graphic>
+                  <FontIcon iconLiteral="far-question-circle" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onRestAction" styleClass="button-map" GridPane.columnIndex="9" GridPane.rowIndex="5">
+               <graphic>
+                  <FontIcon iconLiteral="fas-wrench" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onShopAction" styleClass="button-map" GridPane.columnIndex="9" GridPane.rowIndex="7">
+               <graphic>
+                  <FontIcon iconLiteral="mdal-attach_money" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onShopAction" styleClass="button-map" GridPane.columnIndex="9" GridPane.rowIndex="10">
+               <graphic>
+                  <FontIcon iconLiteral="mdal-attach_money" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onRestAction" styleClass="button-map" GridPane.columnIndex="11" GridPane.rowIndex="7">
+               <graphic>
+                  <FontIcon iconLiteral="fas-wrench" iconSize="15" />
+               </graphic></Button>
+                <Button mnemonicParsing="false" onAction="#onBossNodeAction" prefWidth="49.0" styleClass="button-map" GridPane.columnIndex="13" GridPane.rowIndex="7">
+               <graphic>
+                  <FontIcon iconLiteral="fas-skull" iconSize="25" />
+               </graphic></Button>
+            <Label fx:id="moneyLabel" styleClass="money-label" text="moneyLabel" GridPane.columnIndex="10" />
+            <Label fx:id="healthLabel" styleClass="hp-label" text="Label" GridPane.columnIndex="12" />
+            <Label fx:id="shieldLabel" styleClass="shield-label" text="Label" GridPane.columnIndex="13" />
             </children>
         </GridPane>
     </children>

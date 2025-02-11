@@ -52,6 +52,12 @@
     -fx-background-color:#35F900;
 }
 
+.button:disabled{
+    -fx-background-color: darkgray;
+    -fx-border-color: gray;
+    -fx-opacity: 1;
+}
+
 .progress-bar-vida{
     -fx-accent: red;
 }
@@ -72,4 +78,12 @@
 
 .money-label{
     -fx-text-fill: yellow;
+}
+
+.hp-label{
+    -fx-text-fill: red;
+}
+
+.shield-label{
+    -fx-text-fill: cyan;
 }
