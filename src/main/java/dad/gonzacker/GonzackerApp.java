@@ -23,6 +23,7 @@ public class GonzackerApp extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Gonzacker");
+        stage.setFullScreen(true);
         stage.show();
 
     }

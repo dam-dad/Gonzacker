@@ -15,6 +15,9 @@ import javafx.scene.shape.Line;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MapController implements Initializable  {
@@ -22,6 +25,8 @@ public class MapController implements Initializable  {
     // logic
 
     private Parent previousController;
+    private HashMap<Button, java.util.List<Button>> conexiones = new HashMap<>();
+    private Button botonActual;
 
     // view
 
@@ -47,6 +52,8 @@ public class MapController implements Initializable  {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dibujarLineas(linePane, gridPane);
+        botonActual = (Button) gridPane.getChildren().get(1);
+        habilitarSiguientes(botonActual);
     }
 
     private void dibujarLineas(Pane linePane, GridPane gridPane) {
@@ -118,6 +125,35 @@ public class MapController implements Initializable  {
         line.setStrokeWidth(2);
 
         pane.getChildren().add(line);
+
+        // Guardar conexiones en el mapa
+        conexiones.computeIfAbsent(btn1, k -> new ArrayList<>()).add(btn2);
+        conexiones.computeIfAbsent(btn2, k -> new ArrayList<>()).add(btn1);
+    }
+
+    private void habilitarSiguientes(Button boton) {
+        // Deshabilitar todos los botones excepto el actual
+        for (Button btn : conexiones.keySet()) {
+            btn.setDisable(true);
+        }
+        boton.setDisable(false); // Mantener el botón actual habilitado
+
+        // Habilitar solo los botones conectados
+        List<Button> siguientes = conexiones.get(boton);
+        if (siguientes != null) {
+            for (Button siguiente : siguientes) {
+                siguiente.setDisable(false);
+            }
+        }
+    }
+
+    private void configurarBotones() {
+        for (Button btn : conexiones.keySet()) {
+            btn.setOnAction(event -> {
+                botonActual = btn;
+                habilitarSiguientes(botonActual);
+            });
+        }
     }
 
     @FXML
@@ -131,90 +167,8 @@ public class MapController implements Initializable  {
 
     }
 
-    @FXML
-    void onNode10Action(ActionEvent event) {
 
-    }
 
-    @FXML
-    void onNode11Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode12Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode13Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode14Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode15Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode16Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode17Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode1Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode2Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode3Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode4Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode5Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode6Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode7Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode8Action(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNode9Action(ActionEvent event) {
-
-    }
 
     // getters and setters
 
