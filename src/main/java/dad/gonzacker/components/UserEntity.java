@@ -12,7 +12,7 @@ public class UserEntity extends Entity{
         super();
         setVidaMaxima(50.0);
         setVidaActual(50.0);
-        setEscudoActual(0);
+        setEscudoActual(3);
         energia.set(3);
         energiaMaxima.set(3);
     }

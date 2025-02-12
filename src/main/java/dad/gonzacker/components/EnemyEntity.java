@@ -1,16 +1,16 @@
 package dad.gonzacker.components;
 
+import dad.gonzacker.models.Carta;
 import dad.gonzacker.patronesEnemigo.EnemyPattern;
+import dad.gonzacker.pruebasCombate.PruebaController;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
-
-
-import java.util.Random;
 
 public class EnemyEntity extends Entity {
 
     private UserEntity usuario;
     private EnemyPattern patron;
+    private PruebaController controller; // Cambiar al controlador correcto en un futuro
 
     public EnemyEntity(double vidaMaxima, double escudo, Image image, EnemyPattern patron,UserEntity usuario) {
         super();
@@ -51,73 +51,23 @@ public class EnemyEntity extends Entity {
 
     // Efectos del jugador
 
-    // Metodo para reducir la vida de la entidad
-    public void reducirVida(double cantidad) {
-
-        double nuevoEscudo = escudoActual.get();
-        if (nuevoEscudo > 0){
-            double cantidadTemporal = cantidad-nuevoEscudo;
-
-            if (cantidadTemporal < 0){
-                cantidadTemporal = 0;
-            }
-
-            nuevoEscudo -= cantidad;
-            cantidad = cantidadTemporal;
-
-            if (nuevoEscudo < 0) {
-                nuevoEscudo = 0;
-            }
-
-            escudoActual.set(nuevoEscudo);
-        }
-
-        if (cantidad > 0) {
-            double nuevaVida = vidaActual.get() - cantidad;
-            if (nuevaVida < 0) nuevaVida = 0;
-            vidaActual.set(nuevaVida);
-            System.out.println("Vida de la entidad: " + nuevaVida);
-        }
-    }
-
-
-
-
-
-
     private void efectosCartas() {
         setOnDragDropped(event -> {
             Dragboard dragboard = event.getDragboard();
 
             if (dragboard.hasString()) {
                 String data = dragboard.getString();
-                String[] efectos = data.split(",");
+                String[] partes = data.split(";", 3); // Separar nombre, tipo y efectos
+                if (partes.length < 3) return;
 
-                for (String efecto : efectos) {
-                    if (efecto.startsWith("ataque:")) {
-                        String[] parts = efecto.split(":");
-                        int daño = Integer.parseInt(parts[1]);
-                        System.out.println("Carta de ataque soltada con daño: " + daño);
-                        reducirVida(daño);
-                    }
+                String nombreCarta = partes[0];
+                String tipoCarta = partes[1];
+                String efectosCarta = partes[2];
 
-                    //                else if (efecto.startsWith("curacion:")) {
-                    //                    String[] parts = efecto.split(":");
-                    //                    int curacion = Integer.parseInt(parts[1]);
-                    //                    System.out.println("Carta de curación soltada con curación: " + curacion);
-                    //                    aumentarVida(curacion);
-                    //                }
-                    //
-                    //                else if (efecto.startsWith("escudo:")) {
-                    //                    String[] parts = efecto.split(":");
-                    //                    int escudo = Integer.parseInt(parts[1]);
-                    //                    System.out.println("Carta de escudo soltada con valor: " + escudo);
-                    //                    aumentarEscudo(escudo);
-                    //                }
-
-                    else {
-                        System.out.println("Efecto desconocido: " + data);
-                    }
+                if (controller != null) {
+                    controller.handleCardEffectEnemigo(nombreCarta, tipoCarta, efectosCarta, this);
+                } else {
+                    System.out.println("El controlador aún no ha sido asignado.");
                 }
             }
 
@@ -126,4 +76,19 @@ public class EnemyEntity extends Entity {
         });
     }
 
+    public void aplicarEfectosCarta(String nombreCarta, String tipoCarta, String efectosCarta) {
+        if (controller != null) {
+            controller.handleCardEffectEnemigo(nombreCarta, tipoCarta, efectosCarta, this);
+        } else {
+            System.out.println("El controlador aún no ha sido asignado.");
+        }
+    }
+
+    public PruebaController getController() {
+            return controller;
+    }
+
+    public void setController(PruebaController controller) {
+        this.controller = controller;
+    }
 }
