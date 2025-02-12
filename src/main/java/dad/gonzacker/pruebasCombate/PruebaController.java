@@ -165,6 +165,7 @@ public class PruebaController implements Initializable {
 
                 if (tipoCarta.equals(Tipos.Enemy.name())) {
                     System.out.println("Carta de tipo Enemy no eliminada. No se hace nada.");
+                    return;
                 }
                 // Si la carta es de tipo "Field", realizamos los efectos y la descartamos
                 else if (tipoCarta.equals(Tipos.Field.name())) {
