@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import static dad.gonzacker.models.LogicaCarta.*;
+
 public class PruebaController implements Initializable {
 
     private Deck deck = new Deck();
@@ -60,10 +62,13 @@ public class PruebaController implements Initializable {
         Image imageEnemigo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SlimeBlue.png")));
 
         // Agregar cartas con efectos generados por la clase EfectoCarta
-        deck.agregarCarta(new Carta(1, "Ataque", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
+        deck.agregarCarta(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
+        deck.agregarCarta(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         deck.agregarCarta(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         deck.agregarCarta(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 4 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(4))));
-        deck.agregarCarta(new Carta(4, "Defensa 5",Tipos.Field  ,"Defiende 5 daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(5))));
+        deck.agregarCarta(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(2))));
+        deck.agregarCarta(new Carta(2, "Defensa 3",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
+        deck.agregarCarta(new Carta(3, "Defensa 5",Tipos.Field  ,"Defiende 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(5))));
 
         deck.barajar();
 
@@ -90,12 +95,17 @@ public class PruebaController implements Initializable {
         for (EnemyEntity enemigo : enemigos) {
             enemigo.setController(this);
             enemigo.generarIntencion();
+            enemigo.vidaActualProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal.intValue() <= 0) {
+                    eliminarEnemigo(enemigo);
+                }
+            });
         }
+
+        roboDeCartas(this,5);
 
         configurarDragAndDrop(userField);
         configurarDragAndDrop(battleField);
-
-
     }
 
     public PruebaController() {
@@ -131,6 +141,26 @@ public class PruebaController implements Initializable {
 
     @FXML
     private Label turnLabel;
+
+    @FXML
+    private UserEntity user;
+
+    @FXML
+    void onFinishTurnAction(ActionEvent event) {
+        for (EnemyEntity enemigo : enemigos) {
+            enemigo.realizarAccionAleatoria();
+            enemigo.generarIntencion();
+        }
+        System.out.println("Turno enemigo finalizado.");
+        energyLabel.setText(maxEnergyLabel.getText());
+        descartarMano();
+        roboDeCartas(this,5);
+    }
+
+    @FXML
+    void onDrawAction(ActionEvent event) {
+        roboDeCartas(this,1);
+    }
 
     private void configurarDragAndDrop(AnchorPane campo) {
         if (campo != null) {
@@ -187,7 +217,7 @@ public class PruebaController implements Initializable {
                             String[] parts = efecto.split(":");
                             int defensa = Integer.parseInt(parts[1]);
                             System.out.println("Carta de defensa: " + defensa);
-                            crearEscudo(defensa); // Aplica el daño
+                            crearEscudo(user,defensa); // Aplica el daño
                         }
                         // Aquí podrías agregar más efectos como curación, escudo, etc.
                     }
@@ -258,6 +288,22 @@ public class PruebaController implements Initializable {
         }
     }
 
+    private void descartarMano(){
+        Iterator<javafx.scene.Node> iterator = cartasZoneFlowPane.getChildren().iterator();
+
+        while (iterator.hasNext()) {
+            javafx.scene.Node node = iterator.next();
+            if (node instanceof CartaPequeniaComponent) {
+                // Eliminar el nodo con el iterador
+                CartaPequeniaComponent cartaDescartar = (CartaPequeniaComponent) node;
+                mano.remove(cartaDescartar.getCarta());
+                deck.descartarCarta(cartaDescartar.getCarta());
+                iterator.remove(); // Elimina el nodo de la colección de manera segura
+            }
+        }
+    }
+
+
     private void eliminarCartaDeMano(Carta carta) {
         CartaPequeniaComponent cartaComponent = obtenerComponenteDeCarta(carta);
 
@@ -289,26 +335,6 @@ public class PruebaController implements Initializable {
         return null; // Si no se encuentra la carta, retornamos null
     }
 
-    @FXML
-    void onFinishTurnAction(ActionEvent event) {
-        for (EnemyEntity enemigo : enemigos) {
-            enemigo.realizarAccionAleatoria();
-            enemigo.generarIntencion();
-        }
-        System.out.println("Turno enemigo finalizado.");
-        energyLabel.setText(maxEnergyLabel.getText());
-    }
-
-    @FXML
-    private UserEntity user;
-
-    @FXML
-    void onDrawAction(ActionEvent event) {
-        Carta carta = deck.robarCarta();
-        mano.add(carta);
-        CartaPequeniaComponent cartaComponent = new CartaPequeniaComponent(carta);
-        cartasZoneFlowPane.getChildren().add(cartaComponent);
-    }
 
     private void jugarCarta(CartaPequeniaComponent cartaComponent) {
         cartasZoneFlowPane.getChildren().remove(cartaComponent); // Quitar de la UI
@@ -317,45 +343,26 @@ public class PruebaController implements Initializable {
     }
 
 
-    //Efectos
+    private void eliminarEnemigo(EnemyEntity enemigo) {
 
-    public void crearEscudo(double defensa){
-        user.setEscudoActual(user.getEscudoActual() + defensa);
+        // Removerlo de la lista
+        enemigos.remove(enemigo);
+
+        // Removerlo visualmente del GridPane
+        enemyGridPane.getChildren().remove(enemigo);
+
     }
 
-    public void curarUser(double cura){
-        user.setVidaActual(user.getVidaActual() + cura);
-        if (user.getVidaActual() > user.getVidaMaxima()){
-            user.setVidaActual(user.getVidaMaxima());
-        }
+    public FlowPane getCartasZoneFlowPane() {
+        return cartasZoneFlowPane;
     }
 
-    public void reducirVida(EnemyEntity enemigo, double cantidad) {
+    public List<Carta> getMano() {
+        return mano;
+    }
 
-        double nuevoEscudo = enemigo.getEscudoActual();
-        if (nuevoEscudo > 0){
-            double cantidadTemporal = cantidad-nuevoEscudo;
-
-            if (cantidadTemporal < 0){
-                cantidadTemporal = 0;
-            }
-
-            nuevoEscudo -= cantidad;
-            cantidad = cantidadTemporal;
-
-            if (nuevoEscudo < 0) {
-                nuevoEscudo = 0;
-            }
-
-            enemigo.setEscudoActual(nuevoEscudo);
-        }
-
-        if (cantidad > 0) {
-            double nuevaVida = enemigo.getVidaActual() - cantidad;
-            if (nuevaVida < 0) nuevaVida = 0;
-            enemigo.setVidaActual(nuevaVida);
-            System.out.println("Vida de la entidad: " + nuevaVida);
-        }
+    public Deck getDeck() {
+        return deck;
     }
 
     public BorderPane getRoot() {
