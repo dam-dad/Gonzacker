@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import static dad.gonzacker.models.LogicaCarta.roboDeCartas;
+
 public class MapController implements Initializable  {
 
     // logic
@@ -111,6 +113,12 @@ public class MapController implements Initializable  {
         deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
         deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
         deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+
 
 
         // enemigos
@@ -264,6 +272,9 @@ public class MapController implements Initializable  {
 
         GonzackerApp.getCombateController().setBossfight(true);
 
+        roboDeCartas(GonzackerApp.getCombateController(), 5);
+
+
         // se cambia la vista
 
         GonzackerApp.setRoot(GonzackerApp.getCombateController().getRoot());
@@ -301,6 +312,8 @@ public class MapController implements Initializable  {
         GonzackerApp.getCombateController().getUser().setVidaMaxima(jugador.getVidaMaxima());
         GonzackerApp.getCombateController().getDeck().getCartas().setAll(deck.get().getCartas());
 
+        roboDeCartas(GonzackerApp.getCombateController(), 5);
+
         // se establecen las recompensas
 
         GonzackerApp.getRecompensasContoller().setMoney(random.nextInt(10));
@@ -309,6 +322,7 @@ public class MapController implements Initializable  {
         // se cambia la vista
 
         GonzackerApp.setRoot(GonzackerApp.getCombateController().getRoot());
+
 
     }
 

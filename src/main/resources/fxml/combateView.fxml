@@ -24,7 +24,6 @@
                   <Label fx:id="energyLabel" styleClass="energy-label" text="Label" />
                   <Label fx:id="maxEnergyLabel" styleClass="energy-label" text="Label" />
                   <Button mnemonicParsing="false" onAction="#onFinishTurnAction" text="Terminar turno" />
-                  <Button mnemonicParsing="false" onAction="#onDrawAction" text="Robar Carta" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
