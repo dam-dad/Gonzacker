@@ -17,7 +17,6 @@ public class UserEntity extends Entity{
         energiaMaxima.set(3);
     }
 
-
     @Override
     protected void extraInitialize() {
         //Futuros metodos

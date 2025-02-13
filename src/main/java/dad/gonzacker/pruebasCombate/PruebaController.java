@@ -13,6 +13,9 @@ import dad.gonzacker.patronesEnemigo.PatronAgresivo;
 import dad.gonzacker.patronesEnemigo.PatronDefensivo;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +42,7 @@ public class PruebaController implements Initializable {
     private List<Carta> mano = new ArrayList<>();
     private IntegerProperty userLife = new SimpleIntegerProperty();
     private IntegerProperty userShield = new SimpleIntegerProperty();
-    private List<EnemyEntity> enemigos = new ArrayList<>();
+    private ObservableList<EnemyEntity> enemigos = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,10 +68,11 @@ public class PruebaController implements Initializable {
         deck.agregarCarta(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
         deck.agregarCarta(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         deck.agregarCarta(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
-        deck.agregarCarta(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 4 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(4))));
+        deck.agregarCarta(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(6))));
         deck.agregarCarta(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(2))));
-        deck.agregarCarta(new Carta(2, "Defensa 3",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
-        deck.agregarCarta(new Carta(3, "Defensa 5",Tipos.Field  ,"Defiende 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(5))));
+        deck.agregarCarta(new Carta(2, "Defensa 2",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
+        deck.agregarCarta(new Carta(3, "Defensa 3",Tipos.Field  ,"Defiende 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(6))));
+        deck.agregarCarta(new Carta(1, "Cura 1", Tipos.Field ,"Cura 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.curacion(2))));
 
         deck.barajar();
 
@@ -95,17 +99,39 @@ public class PruebaController implements Initializable {
         for (EnemyEntity enemigo : enemigos) {
             enemigo.setController(this);
             enemigo.generarIntencion();
-            enemigo.vidaActualProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal.intValue() <= 0) {
+            enemigo.vidaActualProperty().addListener((o, ov, nv) -> {
+                if (nv.intValue() <= 0) {
                     eliminarEnemigo(enemigo);
                 }
             });
         }
 
+        userLife.addListener((o, ov, nv) -> {
+            if (nv.intValue() <= 0) {
+                perderPartida();
+            }
+        });
+
+        enemigos.addListener((ListChangeListener<EnemyEntity>) change -> {
+            while (change.next()) {
+                if (enemigos.isEmpty()) {
+                    victoria();
+                }
+            }
+        });
+
         roboDeCartas(this,5);
 
         configurarDragAndDrop(userField);
         configurarDragAndDrop(battleField);
+    }
+
+    private void victoria() {
+        System.out.println("Has ganado el combate");
+    }
+
+    private void perderPartida() {
+        System.out.println("Te han derrotado");
     }
 
     public PruebaController() {
@@ -218,6 +244,11 @@ public class PruebaController implements Initializable {
                             int defensa = Integer.parseInt(parts[1]);
                             System.out.println("Carta de defensa: " + defensa);
                             crearEscudo(user,defensa); // Aplica el daño
+                        } else if (efecto.startsWith("curacion:")) {
+                            String[] parts = efecto.split(":");
+                            int cura = Integer.parseInt(parts[1]);
+                            System.out.println("Carta de cura: " + cura);
+                            curarUser(user,cura); // Aplica el daño
                         }
                         // Aquí podrías agregar más efectos como curación, escudo, etc.
                     }
@@ -278,8 +309,17 @@ public class PruebaController implements Initializable {
                         int daño = Integer.parseInt(parts[1]);
                         System.out.println("Carta de ataque soltada con daño: " + daño);
                         reducirVida(enemigo,daño);
+                    } else if (efecto.startsWith("escudo:")) {
+                        String[] parts = efecto.split(":");
+                        int defensa = Integer.parseInt(parts[1]);
+                        System.out.println("Carta de defensa: " + defensa);
+                        crearEscudo(user,defensa); // Aplica el daño
+                    } if (efecto.startsWith("curacion:")) {
+                        String[] parts = efecto.split(":");
+                        int cura = Integer.parseInt(parts[1]);
+                        System.out.println("Carta de cura: " + cura);
+                        curarUser(user,cura); // Aplica el daño
                     }
-                    // Aquí se podrían agregar más efectos, como curación, daño, etc.
                 }
 
                 // Aquí también podríamos eliminar la carta de la mano y del FlowPane
