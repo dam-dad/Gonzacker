@@ -47,6 +47,9 @@ abstract class Entity extends BorderPane implements Initializable {
     @FXML
     private Label shieldLabel;
 
+    @FXML
+    private Intencion intencionComponent;
+
     public Entity(){
         super();
         try{
@@ -144,34 +147,12 @@ abstract class Entity extends BorderPane implements Initializable {
         this.imagenEntidad.set(imagenEnemigo);
     }
 
-
-
-    // Método para reducir la vida de la entidad
-    private void reducirVida(double cantidad) {
-
-        double nuevoEscudo = escudoActual.get();
-        if (nuevoEscudo > 0){
-            double cantidadTemporal = cantidad-nuevoEscudo;
-
-            if (cantidadTemporal < 0){
-                cantidadTemporal = 0;
-            }
-
-            nuevoEscudo -= cantidad;
-            cantidad = cantidadTemporal;
-
-            if (nuevoEscudo < 0) {
-                nuevoEscudo = 0;
-            }
-
-            escudoActual.set(nuevoEscudo);
-        }
-
-        if (cantidad > 0) {
-            double nuevaVida = vidaActual.get() - cantidad;
-            if (nuevaVida < 0) nuevaVida = 0;
-            vidaActual.set(nuevaVida);
-            System.out.println("Vida de la entidad: " + nuevaVida);
-        }
+    public Intencion getIntencionComponent() {
+        return intencionComponent;
     }
+
+    public void setIntencionComponent(Intencion intencionComponent) {
+        this.intencionComponent = intencionComponent;
+    }
+
 }

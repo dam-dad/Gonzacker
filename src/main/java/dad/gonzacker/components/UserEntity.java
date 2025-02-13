@@ -12,7 +12,7 @@ public class UserEntity extends Entity{
         super();
         setVidaMaxima(50.0);
         setVidaActual(50.0);
-        setEscudoActual(0);
+        setEscudoActual(3);
         energia.set(3);
         energiaMaxima.set(3);
     }
@@ -25,6 +25,26 @@ public class UserEntity extends Entity{
 
     public IntegerProperty energiaProperty() {
         return energia;
+    }
+
+    public int getEnergia() {
+        return energia.get();
+    }
+
+    public void setEnergia(int energia) {
+        this.energia.set(energia);
+    }
+
+    public int getEnergiaMaxima() {
+        return energiaMaxima.get();
+    }
+
+    public IntegerProperty energiaMaximaProperty() {
+        return energiaMaxima;
+    }
+
+    public void setEnergiaMaxima(int energiaMaxima) {
+        this.energiaMaxima.set(energiaMaxima);
     }
 
     public void gastarEnergia(int cantidad) {
@@ -67,4 +87,5 @@ public class UserEntity extends Entity{
             System.out.println("Vida de la entidad: " + nuevaVida);
         }
     }
+
 }

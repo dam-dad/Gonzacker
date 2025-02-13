@@ -3,6 +3,7 @@ package dad.gonzacker.models;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,14 @@ public class Deck {
 
     public List<Carta> getDescarte() {
         return descarte;
+    }
+
+    public ObservableList<Carta> getCartas() {
+        return cartas.get();
+    }
+
+    public ListProperty<Carta> cartasProperty() {
+        return cartas;
     }
 
     public Carta robarCarta() {

@@ -133,14 +133,13 @@ public class CartaPequeniaComponent extends StackPane implements Initializable {
         this.setPickOnBounds(true);
 
         setOnDragDetected(event -> {
-            Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
-            ClipboardContent clipboardContent = new ClipboardContent();
+            Dragboard db = startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
 
-            String efectosConcatenados = String.join(",", carta.getEfectos());
+            // Guardar en el Dragboard la información de la carta
+            content.putString( getCarta().getCoste() + ";" + getCarta().getNombre() + ";" + getCarta().getTipo() + ";" + String.join(",", getCarta().getEfectos()));
+            db.setContent(content);
 
-            clipboardContent.putString(efectosConcatenados);
-
-            dragboard.setContent(clipboardContent);
             event.consume();
         });
     }

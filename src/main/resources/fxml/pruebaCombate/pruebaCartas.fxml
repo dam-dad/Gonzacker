@@ -15,13 +15,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <BorderPane BorderPane.alignment="CENTER">
          <center>
             <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="energyLabel" text="Label" />
+                  <Label fx:id="maxEnergyLabel" text="Label" />
                   <Button mnemonicParsing="false" onAction="#onFinishTurnAction" text="Terminar turno" />
                   <Button mnemonicParsing="false" onAction="#onDrawAction" text="Robar Carta" />
                </children>
@@ -51,11 +52,11 @@
       </ToolBar>
    </top>
    <center>
-      <BorderPane BorderPane.alignment="CENTER">
+      <BorderPane styleClass="campo" stylesheets="@../../css/campo.css" BorderPane.alignment="CENTER">
          <left>
-            <AnchorPane onDragDropped="#onFieldDropped" prefHeight="315.0" prefWidth="346.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="battleField" onDragDropped="#onFieldDropped" prefHeight="315.0" prefWidth="346.0" BorderPane.alignment="CENTER">
                <children>
-                  <UserEntity fx:id="user" layoutX="73.0" layoutY="60.0">
+                  <UserEntity fx:id="user" escudoActual="0.0" layoutX="73.0" layoutY="60.0">
                      <imagenEnemigo>
                         <Image url="@../../images/Programer.png" />
                      </imagenEnemigo>
@@ -64,20 +65,20 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane onDragDropped="#onFieldDropped" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+            <AnchorPane fx:id="userField" onDragDropped="#onFieldDropped" BorderPane.alignment="CENTER" />
          </center>
          <right>
-            <GridPane fx:id="enemyGridPane" hgap="10.0" style="-fx-background-color: red;" vgap="10.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="enemyGridPane" hgap="10.0" prefHeight="315.0" prefWidth="455.0" vgap="10.0" BorderPane.alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <BorderPane.margin>
-                  <Insets bottom="25.0" top="25.0" />
+                  <Insets />
                </BorderPane.margin>
             </GridPane>
          </right>
