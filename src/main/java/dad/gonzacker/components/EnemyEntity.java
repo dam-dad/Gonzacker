@@ -1,18 +1,18 @@
 package dad.gonzacker.components;
 
 import dad.gonzacker.intencionesEnemigo.EnemyIntention;
-import dad.gonzacker.models.Carta;
 import dad.gonzacker.patronesEnemigo.EnemyPattern;
-import dad.gonzacker.pruebasCombate.PruebaController;
+import dad.gonzacker.controllers.CombateController;
+import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 
-public class EnemyEntity extends Entity {
+public class EnemyEntity extends Entity{
 
     private UserEntity usuario;
     private EnemyPattern patron;
     private EnemyIntention intention;
-    private PruebaController controller; // Cambiar al controlador correcto en un futuro
+    private CombateController controller; // Cambiar al controlador correcto en un futuro
     private int intencionFutura;
 
     public EnemyEntity(double vidaMaxima, double escudo, Image image, EnemyPattern patron, EnemyIntention intention, UserEntity usuario) {
@@ -97,11 +97,11 @@ public class EnemyEntity extends Entity {
         }
     }
 
-    public PruebaController getController() {
+    public CombateController getController() {
             return controller;
     }
 
-    public void setController(PruebaController controller) {
+    public void setController(CombateController controller) {
         this.controller = controller;
     }
 

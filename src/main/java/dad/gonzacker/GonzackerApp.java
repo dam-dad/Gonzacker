@@ -1,9 +1,6 @@
 package dad.gonzacker;
 
-import dad.gonzacker.controllers.MapController;
-import dad.gonzacker.controllers.MenuController;
-import dad.gonzacker.controllers.SettingsController;
-import dad.gonzacker.controllers.TiendaController;
+import dad.gonzacker.controllers.*;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,10 +10,14 @@ public class GonzackerApp extends Application {
 
     // controllers
 
+    private static CombateController combateController = new CombateController();
     private static MenuController menuController = new MenuController();
     private static SettingsController settingsController = new SettingsController();
     private static MapController mapController = new MapController();
     private static TiendaController tiendaController = new TiendaController();
+    private static RecompensasContoller recompensasContoller = new RecompensasContoller();
+    private static GameOverController gameOverController = new GameOverController();
+
 
     private static Scene scene = new Scene(menuController.getRoot());
 
@@ -63,5 +64,17 @@ public class GonzackerApp extends Application {
 
     public static TiendaController getShopController() {
         return tiendaController;
+    }
+
+    public static CombateController getCombateController() {
+        return combateController;
+    }
+
+    public static RecompensasContoller getRecompensasContoller() {
+        return recompensasContoller;
+    }
+
+    public static GameOverController getGameOverController() {
+        return gameOverController;
     }
 }

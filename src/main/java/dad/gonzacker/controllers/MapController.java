@@ -2,11 +2,16 @@ package dad.gonzacker.controllers;
 
 import dad.gonzacker.GonzackerApp;
 import dad.gonzacker.components.CartaPequeniaComponent;
+import dad.gonzacker.components.EnemyEntity;
 import dad.gonzacker.components.UserEntity;
+import dad.gonzacker.intencionesEnemigo.IntencionAgresiva;
+import dad.gonzacker.intencionesEnemigo.IntencionDefensiva;
 import dad.gonzacker.models.Carta;
 import dad.gonzacker.models.Deck;
 import dad.gonzacker.models.EfectoCarta;
 import dad.gonzacker.models.Tipos;
+import dad.gonzacker.patronesEnemigo.PatronAgresivo;
+import dad.gonzacker.patronesEnemigo.PatronDefensivo;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -39,7 +44,7 @@ public class MapController implements Initializable  {
 
     private IntegerProperty dinero = new SimpleIntegerProperty();
     private UserEntity jugador = new UserEntity();
-    private List<Entity> enemigos = new ArrayList<>();
+    private List<EnemyEntity> enemigos = new ArrayList<>();
     private ObjectProperty<Deck> deck = new SimpleObjectProperty<>(new Deck());
     private List<Carta> cartas = new ArrayList<>();
 
@@ -82,10 +87,35 @@ public class MapController implements Initializable  {
 
         // cartas
 
-        cartas.add(new Carta(1, "Ataque", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
+        cartas.add(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
+        cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 4 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(4))));
-        cartas.add(new Carta(4, "Ataque 4",Tipos.Enemy  ,"Inflige 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(5))));
+        cartas.add(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(2))));
+        cartas.add(new Carta(2, "Defensa 3",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
+        cartas.add(new Carta(3, "Defensa 5",Tipos.Field  ,"Defiende 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(5))));
+
+        // se añaden 3 cartas aleatorias al deck
+
+        Random random = new Random();
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+        deck.get().getCartas().add(cartas.get(random.nextInt(cartas.size())));
+
+
+        // enemigos
+
+        Image imgAtaque = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Prueba_Imagen.jpg")));
+        Image imageEnemigo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SlimeBlue.png")));
+
+
+        EnemyEntity enemigo1 = new EnemyEntity(10, 0, imageEnemigo,new PatronDefensivo(), new IntencionDefensiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo2 = new EnemyEntity(6, 2, imageEnemigo,new PatronAgresivo(), new IntencionAgresiva(),GonzackerApp.getCombateController().getUser());
+
+
+        enemigos.add(enemigo1);
+        enemigos.add(enemigo2);
+
 
         // bindings
 
@@ -202,6 +232,40 @@ public class MapController implements Initializable  {
     @FXML
     void onCombatAction(ActionEvent event) {
         habilitarSiguientes((Button) event.getSource());
+
+        Random random = new Random();
+        List<EnemyEntity> enmigosAux = enemigos;
+        List<EnemyEntity> enemigosCombate= new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            EnemyEntity enemigo = enmigosAux.get(random.nextInt(enmigosAux.size()));
+            enemigosCombate.add(enemigo);
+            enmigosAux.remove(enemigo);
+
+            if (enmigosAux.isEmpty()) break;
+        }
+
+        // se le pasa al combate controller el jugador, los enemigos y el deck
+
+        GonzackerApp.getCombateController().setEnemigos(enemigosCombate);
+        GonzackerApp.getCombateController().setUpEnemigo();
+        GonzackerApp.getCombateController().distribuirEnemigos();
+        GonzackerApp.getCombateController().getUser().setVidaActual(jugador.getVidaActual());
+        GonzackerApp.getCombateController().getUser().setEscudoActual(jugador.getEscudoActual());
+        GonzackerApp.getCombateController().getUser().setEnergia(jugador.getEnergia());
+        GonzackerApp.getCombateController().getUser().setEnergiaMaxima(jugador.getEnergiaMaxima());
+        GonzackerApp.getCombateController().getUser().setVidaMaxima(jugador.getVidaMaxima());
+        GonzackerApp.getCombateController().getDeck().getCartas().setAll(deck.get().getCartas());
+
+        // se establecen las recompensas
+
+        GonzackerApp.getRecompensasContoller().setMoney(random.nextInt(10));
+        GonzackerApp.getRecompensasContoller().establecerRecompensa(cartas.get(random.nextInt(cartas.size())));
+
+        // se cambia la vista
+
+        GonzackerApp.setRoot(GonzackerApp.getCombateController().getRoot());
+
     }
 
     @FXML
@@ -232,6 +296,15 @@ public class MapController implements Initializable  {
 
 
     // getters and setters
+
+
+    public UserEntity getJugador() {
+        return jugador;
+    }
+
+    public void setJugador(UserEntity jugador) {
+        this.jugador = jugador;
+    }
 
     public StackPane getRoot() {
         return root;

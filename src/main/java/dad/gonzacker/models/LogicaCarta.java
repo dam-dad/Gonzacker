@@ -3,14 +3,14 @@ package dad.gonzacker.models;
 import dad.gonzacker.components.CartaPequeniaComponent;
 import dad.gonzacker.components.EnemyEntity;
 import dad.gonzacker.components.UserEntity;
-import dad.gonzacker.pruebasCombate.PruebaController;
+import dad.gonzacker.controllers.CombateController;
 
 public class LogicaCarta {
 
 
     //Efectos
 
-    public static void roboDeCartas(PruebaController controller, int robos) {
+    public static void roboDeCartas(CombateController controller, int robos) {
         for (int i = 0; i<robos; i++){
             if (controller.getDeck().getDescarte().isEmpty() && controller.getDeck().getCartas().isEmpty()) {
                 return;

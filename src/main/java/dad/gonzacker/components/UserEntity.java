@@ -2,6 +2,7 @@ package dad.gonzacker.components;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.Initializable;
 
 public class UserEntity extends Entity{
 
