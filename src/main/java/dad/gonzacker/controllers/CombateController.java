@@ -42,6 +42,8 @@ public class CombateController implements Initializable {
     private List<Carta> mano = new ArrayList<>();
     private List<EnemyEntity> enemigos = new ArrayList<>();
 
+    private boolean bossfight = false;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -91,9 +93,6 @@ public class CombateController implements Initializable {
 
     @FXML
     private BorderPane root;
-
-    @FXML
-    private Label turnLabel;
 
     @FXML
     private UserEntity user;
@@ -172,6 +171,12 @@ public class CombateController implements Initializable {
                             System.out.println("Carta de defensa: " + defensa);
                             crearEscudo(user,defensa); // Aplica el daño
                         }
+                        else if (efecto.startsWith("curacion:")) {
+                            String[] parts = efecto.split(":");
+                            int cura = Integer.parseInt(parts[1]);
+                            System.out.println("Carta de cura: " + cura);
+                            curarUser(user,cura); // Aplica el daño
+                        }
                         // Aquí podrías agregar más efectos como curación, escudo, etc.
                     }
                 }
@@ -231,6 +236,17 @@ public class CombateController implements Initializable {
                         int daño = Integer.parseInt(parts[1]);
                         System.out.println("Carta de ataque soltada con daño: " + daño);
                         reducirVida(enemigo,daño);
+                    }
+                    else if (efecto.startsWith("escudo:")) {
+                        String[] parts = efecto.split(":");
+                        int defensa = Integer.parseInt(parts[1]);
+                        System.out.println("Carta de defensa: " + defensa);
+                        crearEscudo(user,defensa); // Aplica el daño
+                    } if (efecto.startsWith("curacion:")) {
+                        String[] parts = efecto.split(":");
+                        int cura = Integer.parseInt(parts[1]);
+                        System.out.println("Carta de cura: " + cura);
+                        curarUser(user,cura); // Aplica el daño
                     }
                     // Aquí se podrían agregar más efectos, como curación, daño, etc.
                 }
@@ -337,11 +353,23 @@ public class CombateController implements Initializable {
     }
 
     public void ganarCombate() {
+
         GonzackerApp.getMapController().getJugador().setVidaActual(user.getVidaActual());
         GonzackerApp.getMapController().getJugador().setEscudoActual(user.getEscudoActual());
 
-        GonzackerApp.setRoot(GonzackerApp.getRecompensasContoller().getRoot());
+        if (!bossfight){
+            GonzackerApp.setRoot(GonzackerApp.getRecompensasContoller().getRoot());
+        }
+        else{
+            GonzackerApp.setRoot(GonzackerApp.getVictoriaController().getRoot());
+        }
 
+    }
+
+    @FXML
+    void onSettingsAction(ActionEvent event) {
+        GonzackerApp.setRoot(GonzackerApp.getSettingsController().getRoot());
+        GonzackerApp.getSettingsController().setPreviousController(root);
     }
 
     public FlowPane getCartasZoneFlowPane() {
@@ -382,5 +410,13 @@ public class CombateController implements Initializable {
 
     public void setMano(List<Carta> mano) {
         this.mano = mano;
+    }
+
+    public boolean isBossfight() {
+        return bossfight;
+    }
+
+    public void setBossfight(boolean bossfight) {
+        this.bossfight = bossfight;
     }
 }

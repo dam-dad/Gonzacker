@@ -47,8 +47,14 @@ public class MapController implements Initializable  {
     private List<EnemyEntity> enemigos = new ArrayList<>();
     private ObjectProperty<Deck> deck = new SimpleObjectProperty<>(new Deck());
     private List<Carta> cartas = new ArrayList<>();
+    private int combateActual = 1;
 
     private Image imgAtaque = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Prueba_Imagen.jpg")));
+    Image imageEnemigo1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Enemy1.png")));
+    Image imageEnemigo2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Enemy3b.png")));
+    Image imageEnemigo3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Enemy4.png")));
+    Image imageEnemigo4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/AndromedaRangerCaptain.png")));
+    Image imageBoss = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/EnemyBossUnderworld.png")));
 
     // view
 
@@ -91,9 +97,13 @@ public class MapController implements Initializable  {
         cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
         cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 4 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(4))));
+        cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(6))));
         cartas.add(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(2))));
         cartas.add(new Carta(2, "Defensa 3",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
         cartas.add(new Carta(3, "Defensa 5",Tipos.Field  ,"Defiende 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(5))));
+        cartas.add(new Carta(2, "Defensa 2",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
+        cartas.add(new Carta(3, "Defensa 3",Tipos.Field  ,"Defiende 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(6))));
+        cartas.add(new Carta(1, "Cura 1", Tipos.Field ,"Cura 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.curacion(2))));
 
         // se añaden 3 cartas aleatorias al deck
 
@@ -104,17 +114,22 @@ public class MapController implements Initializable  {
 
 
         // enemigos
-
-        Image imgAtaque = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Prueba_Imagen.jpg")));
-        Image imageEnemigo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SlimeBlue.png")));
-
-
-        EnemyEntity enemigo1 = new EnemyEntity(10, 0, imageEnemigo,new PatronDefensivo(), new IntencionDefensiva(),GonzackerApp.getCombateController().getUser());
-        EnemyEntity enemigo2 = new EnemyEntity(6, 2, imageEnemigo,new PatronAgresivo(), new IntencionAgresiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo1 = new EnemyEntity(10, 0, imageEnemigo1,new PatronDefensivo(), new IntencionDefensiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo2 = new EnemyEntity(6, 2, imageEnemigo1,new PatronAgresivo(), new IntencionAgresiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo3 = new EnemyEntity(8, 1, imageEnemigo2,new PatronDefensivo(), new IntencionDefensiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo4 = new EnemyEntity(12, 2, imageEnemigo2,new PatronAgresivo(), new IntencionAgresiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo5 = new EnemyEntity(15, 3, imageEnemigo3,new PatronDefensivo(), new IntencionDefensiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo6 = new EnemyEntity(20, 4, imageEnemigo3,new PatronAgresivo(), new IntencionAgresiva(),GonzackerApp.getCombateController().getUser());
+        EnemyEntity enemigo7 = new EnemyEntity(25, 5, imageEnemigo4,new PatronDefensivo(), new IntencionDefensiva(),GonzackerApp.getCombateController().getUser());
 
 
         enemigos.add(enemigo1);
         enemigos.add(enemigo2);
+        enemigos.add(enemigo3);
+        enemigos.add(enemigo4);
+        enemigos.add(enemigo5);
+        enemigos.add(enemigo6);
+        enemigos.add(enemigo7);
 
 
         // bindings
@@ -124,6 +139,12 @@ public class MapController implements Initializable  {
         shieldLabel.textProperty().bind(jugador.escudoActualProperty().asString());
         healthLabel.textProperty().bind(jugador.vidaActualProperty().asString());
         moneyLabel.textProperty().bind(dinero.asString());
+
+        jugador.vidaActualProperty().addListener((o, ov, nv) -> {
+            if (nv.intValue() <= 0) {
+                GonzackerApp.setRoot(GonzackerApp.getGameOverController().getRoot());
+            }
+        });
 
     }
 
@@ -225,6 +246,27 @@ public class MapController implements Initializable  {
 
     @FXML
     void onBossNodeAction(ActionEvent event) {
+        // se le pasa al combate controller el jugador, los enemigos y el deck
+
+        List<EnemyEntity> enemigosCombate= new ArrayList<>();
+
+        enemigosCombate.add(new EnemyEntity(40, 10, imageBoss,new PatronAgresivo(), new IntencionAgresiva(),GonzackerApp.getCombateController().getUser()));
+
+        GonzackerApp.getCombateController().setEnemigos(enemigosCombate);
+        GonzackerApp.getCombateController().setUpEnemigo();
+        GonzackerApp.getCombateController().distribuirEnemigos();
+        GonzackerApp.getCombateController().getUser().setVidaActual(jugador.getVidaActual());
+        GonzackerApp.getCombateController().getUser().setEscudoActual(jugador.getEscudoActual());
+        GonzackerApp.getCombateController().getUser().setEnergia(jugador.getEnergiaMaxima());
+        GonzackerApp.getCombateController().getUser().setEnergiaMaxima(jugador.getEnergiaMaxima());
+        GonzackerApp.getCombateController().getUser().setVidaMaxima(jugador.getVidaMaxima());
+        GonzackerApp.getCombateController().getDeck().getCartas().setAll(deck.get().getCartas());
+
+        GonzackerApp.getCombateController().setBossfight(true);
+
+        // se cambia la vista
+
+        GonzackerApp.setRoot(GonzackerApp.getCombateController().getRoot());
 
     }
 
@@ -237,13 +279,15 @@ public class MapController implements Initializable  {
         List<EnemyEntity> enmigosAux = enemigos;
         List<EnemyEntity> enemigosCombate= new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < combateActual; i++) {
             EnemyEntity enemigo = enmigosAux.get(random.nextInt(enmigosAux.size()));
             enemigosCombate.add(enemigo);
             enmigosAux.remove(enemigo);
 
             if (enmigosAux.isEmpty()) break;
         }
+
+        combateActual++;
 
         // se le pasa al combate controller el jugador, los enemigos y el deck
 
@@ -252,7 +296,7 @@ public class MapController implements Initializable  {
         GonzackerApp.getCombateController().distribuirEnemigos();
         GonzackerApp.getCombateController().getUser().setVidaActual(jugador.getVidaActual());
         GonzackerApp.getCombateController().getUser().setEscudoActual(jugador.getEscudoActual());
-        GonzackerApp.getCombateController().getUser().setEnergia(jugador.getEnergia());
+        GonzackerApp.getCombateController().getUser().setEnergia(jugador.getEnergiaMaxima());
         GonzackerApp.getCombateController().getUser().setEnergiaMaxima(jugador.getEnergiaMaxima());
         GonzackerApp.getCombateController().getUser().setVidaMaxima(jugador.getVidaMaxima());
         GonzackerApp.getCombateController().getDeck().getCartas().setAll(deck.get().getCartas());
@@ -270,11 +314,21 @@ public class MapController implements Initializable  {
 
     @FXML
     void onEventAction(ActionEvent event) {
+
+        GonzackerApp.setRoot(GonzackerApp.getEventoController().getRoot());
+
         habilitarSiguientes((Button) event.getSource());
     }
 
     @FXML
     void onRestAction(ActionEvent event) {
+
+        jugador.setVidaActual(jugador.getVidaActual() + 5);
+
+        if (jugador.getVidaActual() > jugador.getVidaMaxima()) {
+            jugador.setVidaActual(jugador.getVidaMaxima());
+        }
+
         habilitarSiguientes((Button) event.getSource());
     }
 
@@ -340,5 +394,13 @@ public class MapController implements Initializable  {
 
     public void setDinero(int dinero) {
         this.dinero.set(dinero);
+    }
+
+    public List<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
     }
 }

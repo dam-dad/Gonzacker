@@ -17,6 +17,8 @@ public class GonzackerApp extends Application {
     private static TiendaController tiendaController = new TiendaController();
     private static RecompensasContoller recompensasContoller = new RecompensasContoller();
     private static GameOverController gameOverController = new GameOverController();
+    private static EventoController eventoController = new EventoController();
+    private static VictoriaController victoriaController = new VictoriaController();
 
 
     private static Scene scene = new Scene(menuController.getRoot());
@@ -76,5 +78,13 @@ public class GonzackerApp extends Application {
 
     public static GameOverController getGameOverController() {
         return gameOverController;
+    }
+
+    public static EventoController getEventoController() {
+        return eventoController;
+    }
+
+    public static VictoriaController getVictoriaController() {
+        return victoriaController;
     }
 }

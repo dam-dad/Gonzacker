@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: transparent;" type="StackPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: transparent;" stylesheets="@../css/gonzacker.css" type="StackPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,13 +22,13 @@
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: transparent;" styleClass="marco" stylesheets="@../css/background.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="costeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="8.0" prefHeight="25.0" prefWidth="26.0" text="1" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <Label fx:id="costeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="8.0" prefHeight="25.0" prefWidth="26.0" styleClass="carta-label" text="1" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="efectoLabel" alignment="CENTER" layoutX="22.0" layoutY="173.0" prefHeight="57.0" prefWidth="136.0" text="Label" wrapText="true" />
-            <Label fx:id="nombreLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="138.0" prefHeight="21.0" prefWidth="136.0" text="Label" />
+            <Label fx:id="efectoLabel" alignment="CENTER" layoutX="22.0" layoutY="173.0" prefHeight="57.0" prefWidth="136.0" styleClass="carta-label" text="Label" wrapText="true" />
+            <Label fx:id="nombreLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="138.0" prefHeight="21.0" prefWidth="136.0" styleClass="carta-label" text="Label" />
          </children>
       </AnchorPane>
    </children>

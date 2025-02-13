@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<StackPane fx:id="root" styleClass="root" stylesheets="@../css/gonzacker.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" styleClass="root" stylesheets="@../css/gonzacker.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="linePane" prefHeight="200.0" prefWidth="200.0" />
         <GridPane fx:id="gridPane" alignment="CENTER" prefHeight="600.0" prefWidth="800.0">
@@ -117,7 +117,7 @@
                <graphic>
                   <FontIcon iconLiteral="fas-wrench" iconSize="15" />
                </graphic></Button>
-                <Button mnemonicParsing="false" onAction="#onBossNodeAction" prefWidth="49.0" styleClass="button-map" GridPane.columnIndex="13" GridPane.rowIndex="7">
+                <Button disable="true" mnemonicParsing="false" onAction="#onBossNodeAction" prefWidth="49.0" styleClass="button-map" GridPane.columnIndex="13" GridPane.rowIndex="7">
                <graphic>
                   <FontIcon iconLiteral="fas-skull" iconSize="25" />
                </graphic></Button>

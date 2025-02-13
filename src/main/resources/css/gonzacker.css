@@ -66,6 +66,7 @@
 }
 
 .combat-borderpane{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(10, 30, 120), rgb(50, 100, 180), rgb(100, 160, 220));
     -fx-border-color: #323335b9;
     -fx-border-width: 6;
 }
@@ -85,4 +86,14 @@
 
 .shield-label{
     -fx-text-fill: cyan;
+}
+
+.energy-label{
+    -fx-text-fill: purple;
+    -fx-font-weight: bold;
+}
+
+.carta-label{
+    -fx-font-size: 12;
+    -fx-text-fill: black;
 }
