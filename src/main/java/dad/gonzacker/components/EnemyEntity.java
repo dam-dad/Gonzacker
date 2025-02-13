@@ -1,5 +1,6 @@
 package dad.gonzacker.components;
 
+import dad.gonzacker.intencionesEnemigo.EnemyIntention;
 import dad.gonzacker.models.Carta;
 import dad.gonzacker.patronesEnemigo.EnemyPattern;
 import dad.gonzacker.pruebasCombate.PruebaController;
@@ -10,21 +11,32 @@ public class EnemyEntity extends Entity {
 
     private UserEntity usuario;
     private EnemyPattern patron;
+    private EnemyIntention intention;
     private PruebaController controller; // Cambiar al controlador correcto en un futuro
+    private int intencionFutura;
 
-    public EnemyEntity(double vidaMaxima, double escudo, Image image, EnemyPattern patron,UserEntity usuario) {
+    public EnemyEntity(double vidaMaxima, double escudo, Image image, EnemyPattern patron, EnemyIntention intention, UserEntity usuario) {
         super();
         setVidaMaxima(vidaMaxima);
         setVidaActual(vidaMaxima);
         setEscudoActual(escudo);
         this.patron = patron;
+        this.intention = intention;
         this.usuario = usuario;
         imagenEntidad.set(image);
     }
 
 
     public void realizarAccionAleatoria() {
-        patron.ejecutarPatron(this, usuario);
+        patron.ejecutarPatron(this, usuario, this.intencionFutura);
+    }
+
+    public void generarIntencion(){
+        intention.iniciarIntencion(this);
+    }
+
+    public void iniciarIntencion(){
+
     }
 
     @Override
@@ -57,15 +69,16 @@ public class EnemyEntity extends Entity {
 
             if (dragboard.hasString()) {
                 String data = dragboard.getString();
-                String[] partes = data.split(";", 3); // Separar nombre, tipo y efectos
-                if (partes.length < 3) return;
+                String[] partes = data.split(";", 4);
+                if (partes.length < 4) return;
 
-                String nombreCarta = partes[0];
-                String tipoCarta = partes[1];
-                String efectosCarta = partes[2];
+                int costeCarta = Integer.parseInt(partes[0]);
+                String nombreCarta = partes[1];
+                String tipoCarta = partes[2];
+                String efectosCarta = partes[3];
 
                 if (controller != null) {
-                    controller.handleCardEffectEnemigo(nombreCarta, tipoCarta, efectosCarta, this);
+                    controller.handleCardEffectEnemigo(costeCarta,nombreCarta, tipoCarta, efectosCarta, this);
                 } else {
                     System.out.println("El controlador aún no ha sido asignado.");
                 }
@@ -76,9 +89,9 @@ public class EnemyEntity extends Entity {
         });
     }
 
-    public void aplicarEfectosCarta(String nombreCarta, String tipoCarta, String efectosCarta) {
+    public void aplicarEfectosCarta(int costeCarta,String nombreCarta, String tipoCarta, String efectosCarta) {
         if (controller != null) {
-            controller.handleCardEffectEnemigo(nombreCarta, tipoCarta, efectosCarta, this);
+            controller.handleCardEffectEnemigo(costeCarta,nombreCarta, tipoCarta, efectosCarta, this);
         } else {
             System.out.println("El controlador aún no ha sido asignado.");
         }
@@ -90,5 +103,13 @@ public class EnemyEntity extends Entity {
 
     public void setController(PruebaController controller) {
         this.controller = controller;
+    }
+
+    public int getIntencionFutura() {
+        return intencionFutura;
+    }
+
+    public void setIntencionFutura(int intencionFutura) {
+        this.intencionFutura = intencionFutura;
     }
 }

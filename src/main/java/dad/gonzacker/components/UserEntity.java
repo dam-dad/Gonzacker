@@ -87,4 +87,5 @@ public class UserEntity extends Entity{
             System.out.println("Vida de la entidad: " + nuevaVida);
         }
     }
+
 }

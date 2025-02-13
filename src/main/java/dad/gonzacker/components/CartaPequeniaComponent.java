@@ -137,7 +137,7 @@ public class CartaPequeniaComponent extends StackPane implements Initializable {
             ClipboardContent content = new ClipboardContent();
 
             // Guardar en el Dragboard la información de la carta
-            content.putString(getCarta().getNombre() + ";" + getCarta().getTipo() + ";" + String.join(",", getCarta().getEfectos()));
+            content.putString( getCarta().getCoste() + ";" + getCarta().getNombre() + ";" + getCarta().getTipo() + ";" + String.join(",", getCarta().getEfectos()));
             db.setContent(content);
 
             event.consume();

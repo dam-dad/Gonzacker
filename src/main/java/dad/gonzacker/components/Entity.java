@@ -47,6 +47,9 @@ abstract class Entity extends BorderPane implements Initializable {
     @FXML
     private Label shieldLabel;
 
+    @FXML
+    private Intencion intencionComponent;
+
     public Entity(){
         super();
         try{
@@ -143,4 +146,13 @@ abstract class Entity extends BorderPane implements Initializable {
     public void setImagenEnemigo(Image imagenEnemigo) {
         this.imagenEntidad.set(imagenEnemigo);
     }
+
+    public Intencion getIntencionComponent() {
+        return intencionComponent;
+    }
+
+    public void setIntencionComponent(Intencion intencionComponent) {
+        this.intencionComponent = intencionComponent;
+    }
+
 }

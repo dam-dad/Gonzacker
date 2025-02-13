@@ -3,6 +3,8 @@ package dad.gonzacker.pruebasCombate;
 import dad.gonzacker.components.CartaPequeniaComponent;
 import dad.gonzacker.components.EnemyEntity;
 import dad.gonzacker.components.UserEntity;
+import dad.gonzacker.intencionesEnemigo.IntencionAgresiva;
+import dad.gonzacker.intencionesEnemigo.IntencionDefensiva;
 import dad.gonzacker.models.Carta;
 import dad.gonzacker.models.Deck;
 import dad.gonzacker.models.EfectoCarta;
@@ -67,8 +69,8 @@ public class PruebaController implements Initializable {
 
         //Creacion momentanea, esto se hará fuera en un futuro
 
-        EnemyEntity enemigo1 = new EnemyEntity(10, 0, imageEnemigo,new PatronDefensivo(), user);
-        EnemyEntity enemigo2 = new EnemyEntity(6, 2, imageEnemigo,new PatronAgresivo(), user);
+        EnemyEntity enemigo1 = new EnemyEntity(10, 0, imageEnemigo,new PatronDefensivo(), new IntencionDefensiva(),user);
+        EnemyEntity enemigo2 = new EnemyEntity(6, 2, imageEnemigo,new PatronAgresivo(), new IntencionAgresiva(),user);
 
         // Simular la array que se usará en un futuro
 
@@ -87,6 +89,7 @@ public class PruebaController implements Initializable {
 
         for (EnemyEntity enemigo : enemigos) {
             enemigo.setController(this);
+            enemigo.generarIntencion();
         }
 
         configurarDragAndDrop(userField);
@@ -147,14 +150,18 @@ public class PruebaController implements Initializable {
 
         if (dragboard.hasString()) {
             String data = dragboard.getString();
-            String[] partes = data.split(";", 3); // Separar nombre, tipo y efectos
-            if (partes.length < 3) return; // Si no tiene los 3 elementos, no hacemos nada
+            String[] partes = data.split(";", 4); // Separar nombre, tipo y efectos
+            if (partes.length < 4) return; // Si no tiene los 3 elementos, no hacemos nada
 
-            String nombreCarta = partes[0];
-            String tipoCarta = partes[1];
-            String efectosCarta = partes[2];
+            int costeCarta = Integer.parseInt(partes[0]);
+            String nombreCarta = partes[1];
+            String tipoCarta = partes[2];
+            String efectosCarta = partes[3];
 
             // Buscar la carta en la mano por nombre
+            if (!verificarEnergia(costeCarta)){
+                return;
+            }
 
             Carta cartaArrastrada = buscarCartaPorNombre(nombreCarta);
 
@@ -170,6 +177,9 @@ public class PruebaController implements Initializable {
                 // Si la carta es de tipo "Field", realizamos los efectos y la descartamos
                 else if (tipoCarta.equals(Tipos.Field.name())) {
                     System.out.println("Carta de tipo Field: aplicando efectos y descartando.");
+
+                    energyLabel.setText(Integer.parseInt(energyLabel.getText()) - costeCarta + "");
+
                     // Aquí aplicamos los efectos de la carta, como daño, curación, etc.
                     String[] efectos = efectosCarta.split(",");
                     for (String efecto : efectos) {
@@ -205,7 +215,17 @@ public class PruebaController implements Initializable {
         event.consume();
     }
 
-    public void handleCardEffectEnemigo(String nombreCarta, String tipoCarta, String efectosCarta, EnemyEntity enemigo) {
+    private boolean verificarEnergia(int coste) {
+
+        return (Integer.parseInt(energyLabel.getText()) - coste) >= 0;
+    }
+
+    public void handleCardEffectEnemigo(int costeCarta,String nombreCarta, String tipoCarta, String efectosCarta, EnemyEntity enemigo) {
+
+
+        if (!verificarEnergia(costeCarta)){
+            return;
+        }
         // Buscar la carta en la mano
         Carta cartaArrastrada = buscarCartaPorNombre(nombreCarta);
 
@@ -218,6 +238,9 @@ public class PruebaController implements Initializable {
                 System.out.println("Carta de tipo Enemy: No se aplica efecto.");
             } else if (tipoCarta.equals(Tipos.Enemy.name())) {
                 System.out.println("Carta de tipo Field: Aplicando efectos...");
+
+                energyLabel.setText(Integer.parseInt(energyLabel.getText()) - costeCarta + "");
+
                 String[] efectos = efectosCarta.split(",");
                 for (String efecto : efectos) {
                     if (efecto.startsWith("ataque:")) {
@@ -270,8 +293,10 @@ public class PruebaController implements Initializable {
     void onFinishTurnAction(ActionEvent event) {
         for (EnemyEntity enemigo : enemigos) {
             enemigo.realizarAccionAleatoria();
+            enemigo.generarIntencion();
         }
         System.out.println("Turno enemigo finalizado.");
+        energyLabel.setText(maxEnergyLabel.getText());
     }
 
     @FXML
