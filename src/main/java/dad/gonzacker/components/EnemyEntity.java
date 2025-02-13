@@ -1,22 +1,23 @@
 package dad.gonzacker.components;
 
 import dad.gonzacker.intencionesEnemigo.EnemyIntention;
+import dad.gonzacker.models.Carta;
 import dad.gonzacker.patronesEnemigo.EnemyPattern;
-import dad.gonzacker.controllers.CombateController;
-import javafx.fxml.Initializable;
+import dad.gonzacker.pruebasCombate.PruebaController;
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 
-public class EnemyEntity extends Entity{
+public class EnemyEntity extends Entity {
 
     private UserEntity usuario;
     private EnemyPattern patron;
     private EnemyIntention intention;
-    private CombateController controller; // Cambiar al controlador correcto en un futuro
+    private PruebaController controller; // Cambiar al controlador correcto en un futuro
     private int intencionFutura;
 
     public EnemyEntity(double vidaMaxima, double escudo, Image image, EnemyPattern patron, EnemyIntention intention, UserEntity usuario) {
-        super();
+        super("/fxml/enemyEntity.fxml");
         setVidaMaxima(vidaMaxima);
         setVidaActual(vidaMaxima);
         setEscudoActual(escudo);
@@ -38,6 +39,9 @@ public class EnemyEntity extends Entity{
     public void iniciarIntencion(){
 
     }
+
+    @FXML
+    private Intencion intencionComponent;
 
     @Override
     protected void extraInitialize() {
@@ -97,11 +101,11 @@ public class EnemyEntity extends Entity{
         }
     }
 
-    public CombateController getController() {
+    public PruebaController getController() {
             return controller;
     }
 
-    public void setController(CombateController controller) {
+    public void setController(PruebaController controller) {
         this.controller = controller;
     }
 
@@ -111,5 +115,13 @@ public class EnemyEntity extends Entity{
 
     public void setIntencionFutura(int intencionFutura) {
         this.intencionFutura = intencionFutura;
+    }
+
+    public Intencion getIntencionComponent() {
+        return intencionComponent;
+    }
+
+    public void setIntencionComponent(Intencion intencionComponent) {
+        this.intencionComponent = intencionComponent;
     }
 }

@@ -47,13 +47,23 @@ abstract class Entity extends BorderPane implements Initializable {
     @FXML
     private Label shieldLabel;
 
-    @FXML
-    private Intencion intencionComponent;
 
     public Entity(){
         super();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/entity.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Entity(String fxmlPath) {
+        super();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
@@ -146,13 +156,4 @@ abstract class Entity extends BorderPane implements Initializable {
     public void setImagenEnemigo(Image imagenEnemigo) {
         this.imagenEntidad.set(imagenEnemigo);
     }
-
-    public Intencion getIntencionComponent() {
-        return intencionComponent;
-    }
-
-    public void setIntencionComponent(Intencion intencionComponent) {
-        this.intencionComponent = intencionComponent;
-    }
-
 }

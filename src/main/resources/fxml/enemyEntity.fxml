@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import dad.gonzacker.components.Intencion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <fx:root minHeight="-Infinity" styleClass="entity" stylesheets="@../css/gonzacker.css" type="BorderPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
-          <children>
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <Intencion fx:id="intencionComponent" numeroIntencionTexto="" prefHeight="60.0" prefWidth="60.0" />
+               </children>
+            </HBox>
             <StackPane>
                <children>
                   <ProgressBar fx:id="shieldBar" prefWidth="200.0" progress="0.0" styleClass="progress-bar-defensa" />
@@ -20,20 +27,20 @@
             </StackPane>
             <StackPane>
                <children>
-                    <ProgressBar fx:id="hpBar" prefWidth="200.0" progress="0.0" styleClass="progress-bar-vida" />
+                  <ProgressBar fx:id="hpBar" prefWidth="200.0" progress="0.0" styleClass="progress-bar-vida" />
                   <Label fx:id="hpLabel" styleClass="entity-label" text="Label" />
                </children>
             </StackPane>
             <BorderPane style="-fx-background-color: transparent;">
                <center>
-                    <ImageView fx:id="entityImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../images/Programer.png" />
-                        </image>
-                    </ImageView>
+                  <ImageView fx:id="entityImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/SlimeBlue.png" />
+                     </image>
+                  </ImageView>
                </center>
             </BorderPane>
-          </children>
+         </children>
       </VBox>
    </center>
 </fx:root>
