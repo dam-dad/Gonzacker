@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.util.converter.NumberStringConverter;
 
@@ -19,14 +21,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Entity extends BorderPane implements Initializable {
+abstract class Entity extends BorderPane implements Initializable {
 
     // model
 
-    private DoubleProperty vidaActual = new SimpleDoubleProperty();
-    private DoubleProperty vidaMaxima = new SimpleDoubleProperty();
-    private DoubleProperty escudoActual = new SimpleDoubleProperty();
-    private ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
+    protected DoubleProperty vidaActual = new SimpleDoubleProperty();
+    protected DoubleProperty vidaMaxima = new SimpleDoubleProperty();
+    protected DoubleProperty escudoActual = new SimpleDoubleProperty();
+    protected ObjectProperty<Image> imagenEntidad = new SimpleObjectProperty<>();
 
     // view
 
@@ -45,10 +47,23 @@ public class Entity extends BorderPane implements Initializable {
     @FXML
     private Label shieldLabel;
 
+
     public Entity(){
         super();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/entity.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Entity(String fxmlPath) {
+        super();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
@@ -76,6 +91,19 @@ public class Entity extends BorderPane implements Initializable {
 
         entityImage.imageProperty().bind(imagenEntidad);
 
+        // Evento para manejar cuando una carta se suelta sobre la entidad
+        setOnDragOver(event -> {
+            if (event.getGestureSource() instanceof CartaPequeniaComponent) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+        });
+
+        extraInitialize();
+    }
+
+    protected void extraInitialize() {
+        // Futuros efectos
     }
 
     // getters and setters
@@ -128,5 +156,4 @@ public class Entity extends BorderPane implements Initializable {
     public void setImagenEnemigo(Image imagenEnemigo) {
         this.imagenEntidad.set(imagenEnemigo);
     }
-
 }
