@@ -94,18 +94,20 @@ public class MapController implements Initializable  {
         habilitarSiguientes((Button) gridPane.getChildren().get(1));
 
         // cartas
+        for (int i = 0; i < 2; i++) {
+            cartas.add(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
+            cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
+            cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(6))));
+            cartas.add(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(2))));
+            cartas.add(new Carta(2, "Defensa 2",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
+            cartas.add(new Carta(3, "Defensa 3",Tipos.Field  ,"Defiende 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(6))));
+        }
+        cartas.add(new Carta(1, "Cura 1", Tipos.Field ,"Cura 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.curacion(3))));
+        cartas.add(new Carta(2, "Defensa/Ataque 1", Tipos.Enemy, "Defensa 3 \n Ataque 3", imgAtaque, Arrays.asList(EfectoCarta.escudo(3), EfectoCarta.ataque(3))));
+        cartas.add(new Carta(2, "Cura/Defensa 1", Tipos.Field ,"Cura 3 \n Defiende 3", imgAtaque, Arrays.asList(EfectoCarta.curacion(3), EfectoCarta.escudo(3))));
+        cartas.add(new Carta(2, "Ataque/Robo 1", Tipos.Enemy, "Ataque 3 \n Robo 2", imgAtaque, Arrays.asList(EfectoCarta.robar(2), EfectoCarta.ataque(3))));
+        cartas.add(new Carta(0, "Robo carta 1",Tipos.Field  ,"Roba 2", imgAtaque, Collections.singletonList(EfectoCarta.robar(2))));
 
-        cartas.add(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(2))));
-        cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
-        cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(3))));
-        cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 4 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(4))));
-        cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.ataque(6))));
-        cartas.add(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(2))));
-        cartas.add(new Carta(2, "Defensa 3",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
-        cartas.add(new Carta(3, "Defensa 5",Tipos.Field  ,"Defiende 5 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(5))));
-        cartas.add(new Carta(2, "Defensa 2",Tipos.Field ,"Defiende 3 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(3))));
-        cartas.add(new Carta(3, "Defensa 3",Tipos.Field  ,"Defiende 6 de daño", imgAtaque, Collections.singletonList(EfectoCarta.escudo(6))));
-        cartas.add(new Carta(1, "Cura 1", Tipos.Field ,"Cura 2 de daño", imgAtaque, Collections.singletonList(EfectoCarta.curacion(2))));
 
         // se añaden 3 cartas aleatorias al deck
 

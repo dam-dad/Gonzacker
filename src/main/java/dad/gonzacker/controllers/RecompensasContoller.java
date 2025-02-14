@@ -50,7 +50,7 @@ public class RecompensasContoller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // binding
-        moneyLabel.textProperty().bind(money.asString().concat(" Gonzalocoins"));
+        moneyLabel.textProperty().bind(money.asString().concat(" Gonzacoins"));
 
     }
 

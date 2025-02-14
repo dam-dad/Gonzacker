@@ -17,8 +17,8 @@ public class EfectoCarta {
         return "escudo:" + cantidad;
     }
 
-    public static String veneno(int turnos) {
-        return "veneno:" + turnos;
+    public static String robar(int cantidad) {
+        return "robar:" + cantidad;
     }
 
     public static List<String> aplicarEfectos(List<String> efectos) {

@@ -176,6 +176,11 @@ public class CombateController implements Initializable {
                             int cura = Integer.parseInt(parts[1]);
                             System.out.println("Carta de cura: " + cura);
                             curarUser(user,cura); // Aplica el daño
+                        } if (efecto.startsWith("robar:")) {
+                            String[] parts = efecto.split(":");
+                            int robo = Integer.parseInt(parts[1]);
+                            System.out.println("Roba: " + robo);
+                            roboDeCartas(this,robo); // Aplica el daño
                         }
                         // Aquí podrías agregar más efectos como curación, escudo, etc.
                     }
@@ -247,6 +252,16 @@ public class CombateController implements Initializable {
                         int cura = Integer.parseInt(parts[1]);
                         System.out.println("Carta de cura: " + cura);
                         curarUser(user,cura); // Aplica el daño
+                    } if (efecto.startsWith("robar:")) {
+                        String[] parts = efecto.split(":");
+                        int robo = Integer.parseInt(parts[1]);
+                        System.out.println("Carta de cura: " + robo);
+                        curarUser(user,robo); // Aplica el daño
+                    } if (efecto.startsWith("robar:")) {
+                        String[] parts = efecto.split(":");
+                        int robo = Integer.parseInt(parts[1]);
+                        System.out.println("Roba: " + robo);
+                        roboDeCartas(this,robo);
                     }
                     // Aquí se podrían agregar más efectos, como curación, daño, etc.
                 }
@@ -354,6 +369,8 @@ public class CombateController implements Initializable {
 
     public void ganarCombate() {
 
+        descartarMano();
+        energyLabel.setText(maxEnergyLabel.getText());
         GonzackerApp.getMapController().getJugador().setVidaActual(user.getVidaActual());
         GonzackerApp.getMapController().getJugador().setEscudoActual(user.getEscudoActual());
 
