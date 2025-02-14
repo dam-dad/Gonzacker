@@ -44,7 +44,7 @@
       </BorderPane>
    </bottom>
    <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="combat-toolbar" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="combat-cartas" BorderPane.alignment="CENTER">
          <items>
             <Button mnemonicParsing="false" onAction="#onSettingsAction">
                <graphic>

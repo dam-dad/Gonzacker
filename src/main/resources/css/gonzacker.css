@@ -71,12 +71,8 @@
     -fx-border-width: 6;
 }
 
-.combat-toolbar{
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(31, 23, 70), rgb(50, 100, 180), rgb(86, 85, 145));
-}
-
 .combat-cartas{
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(31, 23, 70), rgb(50, 100, 180), rgb(86, 85, 145));
+    -fx-background-color: #211948;
 }
 
 .shop-gridpane{
