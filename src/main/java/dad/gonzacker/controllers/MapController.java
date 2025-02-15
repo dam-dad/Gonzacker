@@ -107,12 +107,12 @@ public class MapController implements Initializable  {
 
         // cartas
         for (int i = 0; i < 2; i++) {
-            cartas.add(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque1, Collections.singletonList(EfectoCarta.ataque(10))));
-            cartas.add(new Carta(1, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque2, Collections.singletonList(EfectoCarta.ataque(10))));
-            cartas.add(new Carta(1, "Ataque 3",Tipos.Enemy  ,"Inflige 6 de daño", imgAtaque3, Collections.singletonList(EfectoCarta.ataque(10))));
+            cartas.add(new Carta(1, "Ataque 1", Tipos.Enemy ,"Inflige 2 de daño", imgAtaque1, Collections.singletonList(EfectoCarta.ataque(2))));
+            cartas.add(new Carta(2, "Ataque 2",Tipos.Enemy ,"Inflige 3 de daño", imgAtaque2, Collections.singletonList(EfectoCarta.ataque(3))));
+            cartas.add(new Carta(3, "Ataque 3",Tipos.Enemy  ,"Inflige 6 de daño", imgAtaque3, Collections.singletonList(EfectoCarta.ataque(6))));
             cartas.add(new Carta(1, "Defensa 1", Tipos.Field ,"Defiende 2 de daño", imgDefensa1, Collections.singletonList(EfectoCarta.escudo(2))));
-            cartas.add(new Carta(1, "Defensa 2",Tipos.Field ,"Defiende 3 de daño", imgDefensa2, Collections.singletonList(EfectoCarta.escudo(3))));
-            cartas.add(new Carta(1, "Defensa 3",Tipos.Field  ,"Defiende 6 de daño", imgDefensa3, Collections.singletonList(EfectoCarta.escudo(6))));
+            cartas.add(new Carta(2, "Defensa 2",Tipos.Field ,"Defiende 3 de daño", imgDefensa2, Collections.singletonList(EfectoCarta.escudo(3))));
+            cartas.add(new Carta(3, "Defensa 3",Tipos.Field  ,"Defiende 6 de daño", imgDefensa3, Collections.singletonList(EfectoCarta.escudo(6))));
         }
         cartas.add(new Carta(1, "Cura 1", Tipos.Field ,"Cura 3 de daño", imgCura1, Collections.singletonList(EfectoCarta.curacion(3))));
         cartas.add(new Carta(2, "Defensa/Ataque 1", Tipos.Enemy, "Defensa 3 \n Ataque 3", imgDefAtq, Arrays.asList(EfectoCarta.escudo(3), EfectoCarta.ataque(3))));
