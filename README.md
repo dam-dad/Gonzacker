@@ -42,8 +42,8 @@ Los nodos de reparación nos permiten recuperar una cierta cantidad de vida.
 ## Documentación
 El proyecto cuenta con paquetes principales:
 * `dad`: contiene los archivos principales del juego.
-* `dad.gonzaker.components`: contiene los componentes del juego.
-* `dad.gonzaker.controllers`: contiene todos los controladores y la lógica principal del juego.
-* `dad.gonzaker.intencionesenemigo`: contiene la lógica de las intenciones de los enemigos.
-* `dad.gonzaker.models`: contiene las clases modelo del juego.
-* `dad.gonzaker.patronesEnemigo`: contiene la lógica de los patrones de ataque de los enemigos.
+* `dad.gonzacker.components`: contiene los componentes del juego.
+* `dad.gonzacker.controllers`: contiene todos los controladores y la lógica principal del juego.
+* `dad.gonzacker.intencionesenemigo`: contiene la lógica de las intenciones de los enemigos.
+* `dad.gonzacker.models`: contiene las clases modelo del juego.
+* `dad.gonzacker.patronesEnemigo`: contiene la lógica de los patrones de ataque de los enemigos.
