@@ -7,6 +7,11 @@ Haendel Isaac González Zuleta <br>
 Ismael Medina Waló
 
 ## Instalación
+El juego está disponible para **Windows** en versión instalable.
+
+Descarga alguna de las siguentes versiones:
+
+* [Gonzacker v1.0.0]()
 
 ## Manual de uso
 ### Menú
